@@ -1,10 +1,13 @@
- package com.saurov.attendancemanager;
+ package com.saurov.attendancemanager.activites;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.saurov.attendancemanager.adapters.CategoryAdapter;
+import com.saurov.attendancemanager.R;
 
  public class MainActivity extends AppCompatActivity {
 

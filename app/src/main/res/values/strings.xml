@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Attendance Manager</string>
+    <string name="title_activity_course"> My Courses</string>
 </resources>

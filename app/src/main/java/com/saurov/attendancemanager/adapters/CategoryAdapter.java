@@ -1,6 +1,7 @@
-package com.saurov.attendancemanager;
+package com.saurov.attendancemanager.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.saurov.attendancemanager.R;
+import com.saurov.attendancemanager.activites.CourseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +88,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, categoryList.get(i), Toast.LENGTH_SHORT).show();
+
+                if (categoryList.get(i).equals("Courses")) {
+
+                    Intent intent = new Intent(context, CourseActivity.class);
+
+                    context.startActivity(intent);
+
+                } else {
+
+                    Toast.makeText(context, categoryList.get(i), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

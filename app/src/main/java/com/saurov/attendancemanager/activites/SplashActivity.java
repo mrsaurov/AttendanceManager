@@ -1,8 +1,10 @@
-package com.saurov.attendancemanager;
+package com.saurov.attendancemanager.activites;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.saurov.attendancemanager.activites.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
