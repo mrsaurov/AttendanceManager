@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#607D8B</color>
-    <color name="colorPrimaryDark">#455A64</color>
-    <color name="colorAccent">#536DFE</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="error_red">#F44336</color>
+    <color name="black_overlay">#40000000</color>
 
-    <color name="album_title">#4c4c4c</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#F5F5F5</color>
+    <color name="colorAccent">#1a1a1a</color>
+    <color name="colorText">#000000</color>
+    <color name="colorTextSecondary">#96000000</color>
+    <color name="colorTextDisabled">#61000000</color>
+    <color name="menuBackground">#ccffffff</color>
+    <color name="cardBackgroundColor">#ffffff</color>
+    <color name="progressBarColor">#000000</color>
 </resources>

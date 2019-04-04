@@ -21,8 +21,8 @@
 
         <activity
             android:name=".activites.CourseActivity"
-            android:label="@string/title_activity_course"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_course" />
+
         <activity
             android:name=".activites.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -32,6 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity android:name=".activites.MainActivity" />
     </application>
 
