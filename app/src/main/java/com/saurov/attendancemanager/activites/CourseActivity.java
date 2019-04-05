@@ -1,13 +1,17 @@
 package com.saurov.attendancemanager.activites;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import android.view.View;
 
 import com.saurov.attendancemanager.R;
@@ -18,26 +22,23 @@ import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {
 
+    @BindView(R.id.add_course_fab)
+    FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        ButterKnife.bind(this);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Course course = new Course();
+                Intent i = new Intent(CourseActivity.this, AddCourseActivity.class);
 
-                course.setNumber("CSE 3203");
-                course.setTitle("Computer Architecture & Design");
-                course.setSeries("15");
-                course.setDepartment("CSE");
-                course.setSection("B");
-                course.save();
-
-                Snackbar.make(view, "Course Added", Snackbar.LENGTH_LONG).show();
+                startActivity(i);
             }
         });
 
