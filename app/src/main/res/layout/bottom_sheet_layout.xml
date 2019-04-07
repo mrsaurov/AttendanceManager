@@ -8,21 +8,49 @@
     android:paddingBottom="8dp">
 
     <LinearLayout
+        android:id="@+id/openItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/bottom_sheet_item_margin"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginRight="32dp"
-            app:ico_icon="gmd-edit"
-            app:ico_color="@color/bottom_sheet_icon_color"/>
+            app:ico_color="@color/bottom_sheet_icon_color"
+            app:ico_icon="gmd-open-in-new" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Open"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/editItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/bottom_sheet_item_margin"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="32dp"
+            app:ico_color="@color/bottom_sheet_icon_color"
+            app:ico_icon="gmd-edit" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,21 +62,22 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/deleteItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/bottom_sheet_item_margin"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginRight="32dp"
-            app:ico_icon="faw-trash-alt"
-            app:ico_color="@color/bottom_sheet_icon_color"/>
+            app:ico_color="@color/bottom_sheet_icon_color"
+            app:ico_icon="faw-trash-alt" />
 
         <TextView
             android:layout_width="wrap_content"

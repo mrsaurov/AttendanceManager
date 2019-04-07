@@ -1,24 +1,21 @@
 package com.saurov.attendancemanager.adapters;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.database.Course;
-import com.saurov.attendancemanager.dialogs.BottomSheetDialogFrament;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHolder> {
 
@@ -27,9 +24,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
     private OnItemClickListener onItemClickListener;
 
 
-
     public interface OnItemClickListener {
         void onClick(Course course, int position);
+
+        void onMenuClick(Course course, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -64,10 +62,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         myViewHolder.courseMenuImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetDialogFragment bottomSheet = new BottomSheetDialogFrament();
 
-
-                bottomSheet.show(((AppCompatActivity) context).getSupportFragmentManager(), "example");
+                if (onItemClickListener != null) {
+                    onItemClickListener.onMenuClick(course, i);
+                }
             }
         });
 
@@ -82,6 +80,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
             }
         });
 
+        myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onMenuClick(course, i);
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -91,18 +99,23 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.course_no)
         TextView courseNo;
+
+        @BindView(R.id.course_title)
         TextView courseTitle;
+
+        @BindView(R.id.course_class)
         TextView courseClass;
+
+        @BindView(R.id.course_menu_image_view)
         ImageView courseMenuImageView;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            courseNo = itemView.findViewById(R.id.course_no);
-            courseTitle = itemView.findViewById(R.id.course_title);
-            courseClass = itemView.findViewById(R.id.course_class);
-            courseMenuImageView = itemView.findViewById(R.id.course_menu_image_view);
+
+            ButterKnife.bind(this, itemView);
 
         }
     }
