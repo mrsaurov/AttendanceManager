@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.saurov.attendancemanager.R;
-import com.saurov.attendancemanager.activites.CourseActivity;
+import com.saurov.attendancemanager.activities.CourseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

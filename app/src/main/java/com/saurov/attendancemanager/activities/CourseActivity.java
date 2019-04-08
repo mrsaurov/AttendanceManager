@@ -1,4 +1,4 @@
-package com.saurov.attendancemanager.activites;
+package com.saurov.attendancemanager.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.LayoutInflaterCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,6 +26,10 @@ public class CourseActivity extends AppCompatActivity {
 
     @BindView(R.id.add_course_fab)
     FloatingActionButton fab;
+
+
+    public static final String EDIT_COURSE_FLAG = "EDIT_COURSE_FLAG";
+    public static final String COURSE_ID_TAG = "COURSE_ID_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(CourseActivity.this, AddCourseActivity.class);
+                Intent i = new Intent(CourseActivity.this, AddEditCourseActivity.class);
 
                 startActivity(i);
             }
@@ -53,7 +57,8 @@ public class CourseActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new CourseAdapter.OnItemClickListener() {
             @Override
             public void onClick(Course course, int position) {
-                Toast.makeText(CourseActivity.this, course.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(CourseActivity.this, CourseDetailActivity.class);
+                startActivity(i);
             }
 
             @Override
@@ -65,10 +70,15 @@ public class CourseActivity extends AppCompatActivity {
                     @Override
                     public void onItemClicked(String selectionId) {
 
+                        Intent intent;
+
                         switch (selectionId) {
 
                             case CourseBottomSheetDialogFragment.ITEM_OPEN:
-                                Toast.makeText(CourseActivity.this, "Open", Toast.LENGTH_SHORT).show();
+
+                                intent = new Intent(CourseActivity.this, CourseDetailActivity.class);
+
+                                startActivity(intent);
                                 break;
 
                             case CourseBottomSheetDialogFragment.ITEM_DELETE:
@@ -76,7 +86,16 @@ public class CourseActivity extends AppCompatActivity {
                                 break;
 
                             case CourseBottomSheetDialogFragment.ITEM_EDIT:
-                                Toast.makeText(CourseActivity.this, "Edit", Toast.LENGTH_SHORT).show();
+
+                                intent = new Intent(CourseActivity.this, AddEditCourseActivity.class);
+
+                                intent.putExtra(EDIT_COURSE_FLAG, "EDIT");
+
+                                intent.putExtra(COURSE_ID_TAG, course.getId());
+
+                                startActivity(intent);
+
+//                                Toast.makeText(CourseActivity.this, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -86,8 +105,10 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+
+//        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+//        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
 
         courseRecyclerView.setLayoutManager(layoutManager);
         courseRecyclerView.setItemAnimator(new DefaultItemAnimator());

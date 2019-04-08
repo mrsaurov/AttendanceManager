@@ -1,22 +1,21 @@
-package com.saurov.attendancemanager.activites;
+package com.saurov.attendancemanager.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.QuickContactBadge;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.database.Course;
 
-public class AddCourseActivity extends AppCompatActivity {
+public class AddEditCourseActivity extends AppCompatActivity {
 
     @BindView(R.id.course_name_edit_text)
     TextInputEditText courseName;
@@ -33,11 +32,13 @@ public class AddCourseActivity extends AppCompatActivity {
     @BindView(R.id.section_radio_group)
     RadioGroup sectionRadioGroup;
 
-    @BindView(R.id.next_button)
-    MaterialButton nextButton;
+    @BindView(R.id.save_button)
+    MaterialButton saveButton;
 
     @BindView(R.id.cancel_button)
     MaterialButton cancelButton;
+
+    Course course;
 
 
     @Override
@@ -47,26 +48,67 @@ public class AddCourseActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        String editflag = getIntent().getStringExtra(CourseActivity.EDIT_COURSE_FLAG);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
+
+
+        if (editflag != null) {
+
+            //Edit Request
+
+            long courseId = getIntent().getLongExtra(CourseActivity.COURSE_ID_TAG, 0);
+
+            Course course = SugarRecord.findById(Course.class, courseId);
+
+            courseName.setText(course.getTitle());
+            series.setText(course.getSeries());
+            courseNo.setText(course.getNumber());
+            departmentName.setText(course.getDepartment());
+
+            switch (course.getSection()){
+                case "A":
+                    sectionRadioGroup.check(R.id.a_radio_button);
+                    break;
+
+                case "B":
+                    sectionRadioGroup.check(R.id.b_radio_button);
+                    break;
+
+                case "C":
+                    sectionRadioGroup.check(R.id.c_radio_button);
+                    break;
+            }
+
+
+            saveButton.setText("Edit");
+
+        } else {
+
+            //Save Request
+
+            course = new Course();
+
+        }
+
+
+        //Saving or editing course
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                Course course = new Course();
-
                 switch (sectionRadioGroup.getCheckedRadioButtonId()) {
 
                     case R.id.a_radio_button:
-                        Toast.makeText(AddCourseActivity.this, "A", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditCourseActivity.this, "A", Toast.LENGTH_SHORT).show();
                         course.setSection("A");
                         break;
                     case R.id.b_radio_button:
-                        Toast.makeText(AddCourseActivity.this, "B", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditCourseActivity.this, "B", Toast.LENGTH_SHORT).show();
                         course.setSection("B");
                         break;
                     case R.id.c_radio_button:
-                        Toast.makeText(AddCourseActivity.this, "C", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditCourseActivity.this, "C", Toast.LENGTH_SHORT).show();
                         course.setSection("C");
                         break;
                 }

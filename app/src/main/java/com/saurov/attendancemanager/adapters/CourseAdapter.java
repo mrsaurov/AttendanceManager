@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.database.Course;
 
@@ -55,7 +57,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         Course course = courseList.get(i);
 
         myViewHolder.courseTitle.setText(course.getTitle());
-        myViewHolder.courseNo.setText(course.getNumber());
+//        myViewHolder.courseNo.setText(course.getNumber());
         myViewHolder.courseClass.setText(
                 course.getDepartment() + " " + course.getSeries() + " " + course.getSection());
 
@@ -90,6 +92,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
                 return true;
             }
         });
+
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+
+        int color = generator.getColor(course.getSeries());
+
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRound(course.getSeries(), color);
+
+        myViewHolder.courseSeriesImageView.setImageDrawable(drawable);
+
+
     }
 
     @Override
@@ -99,8 +112,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.course_no)
-        TextView courseNo;
+//        @BindView(R.id.course_no)
+//        TextView courseNo;
+        @BindView(R.id.course_series_image_view)
+        ImageView courseSeriesImageView;
 
         @BindView(R.id.course_title)
         TextView courseTitle;

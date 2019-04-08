@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.saurov.attendancemanager">
 
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -14,7 +17,11 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
         <activity
-            android:name=".activites.AddCourseActivity"
+            android:name=".activities.CourseDetailActivity"
+            android:parentActivityName=".activities.CourseActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.AddEditCourseActivity"
             android:label="@string/title_activity_add_course" />
 
         <meta-data
@@ -31,10 +38,10 @@
             android:value="com.saurov.attendancemanager" />
 
         <activity
-            android:name=".activites.CourseActivity"
+            android:name=".activities.CourseActivity"
             android:label="@string/title_activity_course" />
         <activity
-            android:name=".activites.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activites.MainActivity" />
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>

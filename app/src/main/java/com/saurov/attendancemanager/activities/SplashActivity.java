@@ -1,4 +1,4 @@
-package com.saurov.attendancemanager.activites;
+package com.saurov.attendancemanager.activities;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;

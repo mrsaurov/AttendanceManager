@@ -17,4 +17,5 @@
     <color name="progressBarColor">#000000</color>
 
     <color name="bottom_sheet_icon_color">#737373</color>
+    <color name="appbar_title_text_color">@color/black</color>
 </resources>

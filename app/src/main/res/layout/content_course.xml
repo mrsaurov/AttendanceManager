@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activites.CourseActivity"
+    tools:context=".activities.CourseActivity"
     tools:showIn="@layout/activity_course">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/course_recycler_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

@@ -76,7 +76,7 @@ public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFra
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.bottom_sheet_layout, container, false);
+        View view = inflater.inflate(R.layout.course_bottom_sheet_layout, container, false);
 
         ButterKnife.bind(this, view);
 
