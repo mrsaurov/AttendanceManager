@@ -95,6 +95,8 @@ public class CourseActivity extends AppCompatActivity {
 
                                 startActivity(intent);
 
+
+
 //                                Toast.makeText(CourseActivity.this, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
                         }

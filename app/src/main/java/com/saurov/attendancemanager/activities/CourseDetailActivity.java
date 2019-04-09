@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseTabAdapter;
 import com.saurov.attendancemanager.fragments.CourseInfoFragment;
+import com.saurov.attendancemanager.fragments.CourseStudentFragment;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -59,9 +60,9 @@ public class CourseDetailActivity extends AppCompatActivity {
 
         mTabAdapter.addFragment(courseInfoFragment, "Info");
 
-        CourseInfoFragment courseInfoFragment2 = new CourseInfoFragment();
+        CourseStudentFragment studentFragment = new CourseStudentFragment();
 
-        mTabAdapter.addFragment(courseInfoFragment2, "Students");
+        mTabAdapter.addFragment(studentFragment, "Students");
 
         courseViewPager.setAdapter(mTabAdapter);
 

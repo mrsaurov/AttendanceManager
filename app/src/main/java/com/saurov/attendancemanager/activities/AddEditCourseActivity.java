@@ -1,9 +1,11 @@
 package com.saurov.attendancemanager.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -51,21 +53,20 @@ public class AddEditCourseActivity extends AppCompatActivity {
         String editflag = getIntent().getStringExtra(CourseActivity.EDIT_COURSE_FLAG);
 
 
-
         if (editflag != null) {
 
             //Edit Request
 
             long courseId = getIntent().getLongExtra(CourseActivity.COURSE_ID_TAG, 0);
 
-            Course course = SugarRecord.findById(Course.class, courseId);
+            course = Course.findById(Course.class, courseId);
 
             courseName.setText(course.getTitle());
             series.setText(course.getSeries());
             courseNo.setText(course.getNumber());
             departmentName.setText(course.getDepartment());
 
-            switch (course.getSection()){
+            switch (course.getSection()) {
                 case "A":
                     sectionRadioGroup.check(R.id.a_radio_button);
                     break;
@@ -82,6 +83,8 @@ public class AddEditCourseActivity extends AppCompatActivity {
 
             saveButton.setText("Edit");
 
+            course.save();
+
         } else {
 
             //Save Request
@@ -96,19 +99,15 @@ public class AddEditCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 switch (sectionRadioGroup.getCheckedRadioButtonId()) {
 
                     case R.id.a_radio_button:
-                        Toast.makeText(AddEditCourseActivity.this, "A", Toast.LENGTH_SHORT).show();
                         course.setSection("A");
                         break;
                     case R.id.b_radio_button:
-                        Toast.makeText(AddEditCourseActivity.this, "B", Toast.LENGTH_SHORT).show();
                         course.setSection("B");
                         break;
                     case R.id.c_radio_button:
-                        Toast.makeText(AddEditCourseActivity.this, "C", Toast.LENGTH_SHORT).show();
                         course.setSection("C");
                         break;
                 }
@@ -123,7 +122,39 @@ public class AddEditCourseActivity extends AppCompatActivity {
             }
         });
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                showCancelDialog();
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+//        showCancelDialog();
+        finish();
+    }
+
+    private void showCancelDialog() {
+        new AlertDialog.Builder(AddEditCourseActivity.this)
+                .setMessage("Are you sure want to cancel?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
     }
 }
 

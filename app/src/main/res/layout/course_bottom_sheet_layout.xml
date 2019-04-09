@@ -15,7 +15,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/bottom_sheet_item_margin"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/bottom_sheet_items_padding_top"
         android:paddingBottom="10dp">
 
         <ImageView
@@ -42,7 +42,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/bottom_sheet_item_margin"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/bottom_sheet_items_padding_top"
         android:paddingBottom="10dp">
 
         <ImageView
@@ -69,7 +69,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/bottom_sheet_item_margin"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/bottom_sheet_items_padding_top"
         android:paddingBottom="10dp">
 
         <ImageView
@@ -96,7 +96,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/bottom_sheet_item_margin"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/bottom_sheet_items_padding_top"
         android:paddingBottom="10dp">
 
         <ImageView

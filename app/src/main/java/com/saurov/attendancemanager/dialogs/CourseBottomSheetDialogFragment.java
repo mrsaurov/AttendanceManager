@@ -47,6 +47,8 @@ public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFra
         if (mListener != null) {
             mListener.onItemClicked(ITEM_OPEN);
         }
+
+        dismiss();
     }
 
 
