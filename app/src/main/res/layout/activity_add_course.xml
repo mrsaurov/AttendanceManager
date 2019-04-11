@@ -57,6 +57,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        
+        <!--<org.angmarch.views.NiceSpinner-->
+            <!--android:id="@+id/section_spinner"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#ccff23"-->
+            <!--android:paddingTop="10dp"/>-->
+
+        <Spinner
+            android:id="@+id/section_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Spinner.Underlined"/>
+        
+
         <RadioGroup
             android:id="@+id/section_radio_group"
             android:layout_width="wrap_content"
