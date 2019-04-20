@@ -29,7 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddEditCourseActivity extends AppCompatActivity {
+public class AddEditCourseActivity extends AppCompatActivity{
 
     @BindView(R.id.course_name_edit_text)
     TextInputEditText courseName;
@@ -43,9 +43,6 @@ public class AddEditCourseActivity extends AppCompatActivity {
     @BindView(R.id.series_edit_text)
     TextInputEditText series;
 
-    @BindView(R.id.section_radio_group)
-    RadioGroup sectionRadioGroup;
-
     @BindView(R.id.section_spinner)
     Spinner sectionSpinner;
 
@@ -58,8 +55,6 @@ public class AddEditCourseActivity extends AppCompatActivity {
     Course course;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +63,6 @@ public class AddEditCourseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initializeSectionSpinner();
-
 
         //////////
 
@@ -89,15 +83,15 @@ public class AddEditCourseActivity extends AppCompatActivity {
 
             switch (course.getSection()) {
                 case "A":
-                    sectionRadioGroup.check(R.id.a_radio_button);
+                    sectionSpinner.setSelection(1);
                     break;
 
                 case "B":
-                    sectionRadioGroup.check(R.id.b_radio_button);
+                    sectionSpinner.setSelection(2);
                     break;
 
                 case "C":
-                    sectionRadioGroup.check(R.id.c_radio_button);
+                    sectionSpinner.setSelection(3);
                     break;
             }
 
@@ -120,18 +114,20 @@ public class AddEditCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                switch (sectionRadioGroup.getCheckedRadioButtonId()) {
+                switch (sectionSpinner.getSelectedItemPosition()){
 
-                    case R.id.a_radio_button:
+                    case 1:
                         course.setSection("A");
                         break;
-                    case R.id.b_radio_button:
+                    case 2:
                         course.setSection("B");
                         break;
-                    case R.id.c_radio_button:
+                    case 3:
                         course.setSection("C");
                         break;
+
                 }
+
 
                 course.setTitle(courseName.getText().toString());
                 course.setDepartment(departmentName.getText().toString());
@@ -139,6 +135,9 @@ public class AddEditCourseActivity extends AppCompatActivity {
                 course.setSeries(series.getText().toString());
 
                 course.save();
+//                if (onCourseSavedListener != null){
+//                    onCourseSavedListener.onCourseSaved();
+//                }
                 finish();
             }
         });
@@ -160,7 +159,7 @@ public class AddEditCourseActivity extends AppCompatActivity {
         finish();
     }
 
-    private void initializeSectionSpinner(){
+    private void initializeSectionSpinner() {
 
         String[] section = new String[]{
                 "Section",
@@ -219,18 +218,18 @@ public class AddEditCourseActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
 
-                if (position != 0){
+                if (position != 0) {
 
-                    TextView selectedText=  view.findViewById(R.id.spinner_text_view);
+                    TextView selectedText = view.findViewById(R.id.spinner_text_view);
                     selectedText.setTextColor(getResources().getColor(R.color.spinnerSelectedTextColor));
                 }
                 // If user change the default selection
                 // First item is disable and it is used for hint
                 if (position > 0) {
                     // Notify the selected item text
-                    Toast.makeText
-                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
+//                    Toast.makeText
+//                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
+//                            .show();
                 }
             }
 
@@ -259,5 +258,15 @@ public class AddEditCourseActivity extends AppCompatActivity {
                 })
                 .show();
     }
+
+//    public interface OnCourseSavedListener{
+//        void onCourseSaved();
+//    }
+//
+//    OnCourseSavedListener onCourseSavedListener;
+//
+//    public void setOnCourseSavedListener(OnCourseSavedListener listener){
+//        this.onCourseSavedListener = listener;
+//    }
 }
 

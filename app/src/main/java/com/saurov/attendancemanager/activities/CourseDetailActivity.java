@@ -13,14 +13,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
+import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseTabAdapter;
+import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.fragments.CourseInfoFragment;
 import com.saurov.attendancemanager.fragments.CourseStudentFragment;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
+    public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
+
     private CourseTabAdapter mTabAdapter;
+    private Course course;
 
     @BindView(R.id.course_view_pager)
     ViewPager courseViewPager;
@@ -53,10 +58,16 @@ public class CourseDetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
+        long courseId = getIntent().getLongExtra(TAG_COURSE_ID,0);
+
+        course = SugarRecord.findById(Course.class, courseId);
+
 
         mTabAdapter = new CourseTabAdapter(getSupportFragmentManager());
 
-        CourseInfoFragment courseInfoFragment = new CourseInfoFragment();
+//        CourseInfoFragment courseInfoFragment = new CourseInfoFragment();
+
+        CourseInfoFragment courseInfoFragment = CourseInfoFragment.newInstance(courseId);
 
         mTabAdapter.addFragment(courseInfoFragment, "Info");
 

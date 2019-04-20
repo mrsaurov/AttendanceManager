@@ -105,9 +105,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     }
 
+
     @Override
     public int getItemCount() {
         return courseList.size();
+    }
+
+    public void refreshData(List<Course> data){
+        this.courseList = data;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

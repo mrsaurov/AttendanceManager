@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
+import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseAdapter;
 import com.saurov.attendancemanager.database.Course;
@@ -22,10 +23,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CourseActivity extends AppCompatActivity {
+public class CourseActivity extends AppCompatActivity{
 
     @BindView(R.id.add_course_fab)
     FloatingActionButton fab;
+
+    @BindView(R.id.course_recycler_view)
+    RecyclerView courseRecyclerView;
+
+    CourseAdapter adapter;
+
 
 
     public static final String EDIT_COURSE_FLAG = "EDIT_COURSE_FLAG";
@@ -52,12 +59,13 @@ public class CourseActivity extends AppCompatActivity {
 
         List<Course> courseList = Course.listAll(Course.class);
 
-        RecyclerView courseRecyclerView = findViewById(R.id.course_recycler_view);
-        CourseAdapter adapter = new CourseAdapter(this, courseList);
+        courseRecyclerView = findViewById(R.id.course_recycler_view);
+        adapter = new CourseAdapter(this, courseList);
         adapter.setOnItemClickListener(new CourseAdapter.OnItemClickListener() {
             @Override
             public void onClick(Course course, int position) {
                 Intent i = new Intent(CourseActivity.this, CourseDetailActivity.class);
+                i.putExtra(CourseDetailActivity.TAG_COURSE_ID, course.getId());
                 startActivity(i);
             }
 
@@ -77,12 +85,16 @@ public class CourseActivity extends AppCompatActivity {
                             case CourseBottomSheetDialogFragment.ITEM_OPEN:
 
                                 intent = new Intent(CourseActivity.this, CourseDetailActivity.class);
+                                intent.putExtra(CourseDetailActivity.TAG_COURSE_ID, course.getId());
 
                                 startActivity(intent);
+
                                 break;
 
                             case CourseBottomSheetDialogFragment.ITEM_DELETE:
                                 course.delete();
+
+                                refreshCourseRecylerView();
                                 break;
 
                             case CourseBottomSheetDialogFragment.ITEM_EDIT:
@@ -95,9 +107,6 @@ public class CourseActivity extends AppCompatActivity {
 
                                 startActivity(intent);
 
-
-
-//                                Toast.makeText(CourseActivity.this, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -116,4 +125,19 @@ public class CourseActivity extends AppCompatActivity {
         courseRecyclerView.setItemAnimator(new DefaultItemAnimator());
         courseRecyclerView.setAdapter(adapter);
     }
+
+    private void refreshCourseRecylerView(){
+        adapter.refreshData(SugarRecord.listAll(Course.class));
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        refreshCourseRecylerView();
+
+    }
+
+
 }
