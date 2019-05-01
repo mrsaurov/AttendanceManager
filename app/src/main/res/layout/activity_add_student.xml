@@ -26,7 +26,7 @@
                 android:id="@+id/enrollment_first_roll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -40,7 +40,7 @@
                 android:id="@+id/enrollment_last_roll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -2,6 +2,8 @@ package com.saurov.attendancemanager.database;
 
 import com.orm.SugarRecord;
 
+import java.util.List;
+
 public class Course extends SugarRecord<Course> {
 
     private String number;
@@ -19,6 +21,10 @@ public class Course extends SugarRecord<Course> {
         this.series = series;
         this.department = department;
         this.section = section;
+    }
+
+    public List<CourseStudent> getStudents() {
+        return SugarRecord.find(CourseStudent.class, "course = ?", String.valueOf(this.getId()));
     }
 
     public String getNumber() {

@@ -32,12 +32,11 @@ public class CourseInfoFragment extends Fragment {
     @BindView(R.id.course_no_text_view)
     TextView courseNoTextView;
 
-    Course course;
+    private Course course;
 
 
     private static final String ARG_COURSE_ID = "arg_course_id";
 
-    // TODO: Rename and change types of parameters
     private long courseId;
     private OnFragmentInteractionListener mListener;
 

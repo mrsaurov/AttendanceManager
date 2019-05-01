@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,14 +25,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddEditCourseActivity extends AppCompatActivity{
+public class AddEditCourseActivity extends AppCompatActivity {
 
     @BindView(R.id.course_name_edit_text)
     TextInputEditText courseName;
@@ -114,7 +113,7 @@ public class AddEditCourseActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                switch (sectionSpinner.getSelectedItemPosition()){
+                switch (sectionSpinner.getSelectedItemPosition()) {
 
                     case 1:
                         course.setSection("A");

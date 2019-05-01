@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -58,26 +59,29 @@ public class CourseDetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        long courseId = getIntent().getLongExtra(TAG_COURSE_ID,0);
+        long courseId = getIntent().getLongExtra(TAG_COURSE_ID, 0);
 
         course = SugarRecord.findById(Course.class, courseId);
 
+        initializeTabs(courseId);
+
+
+    }
+
+    private void initializeTabs(long courseId) {
 
         mTabAdapter = new CourseTabAdapter(getSupportFragmentManager());
-
-//        CourseInfoFragment courseInfoFragment = new CourseInfoFragment();
 
         CourseInfoFragment courseInfoFragment = CourseInfoFragment.newInstance(courseId);
 
         mTabAdapter.addFragment(courseInfoFragment, "Info");
 
-        CourseStudentFragment studentFragment = new CourseStudentFragment();
+        CourseStudentFragment studentFragment = CourseStudentFragment.newInstance(courseId);
 
         mTabAdapter.addFragment(studentFragment, "Students");
 
         courseViewPager.setAdapter(mTabAdapter);
 
         courseTabLayout.setupWithViewPager(courseViewPager);
-
     }
 }

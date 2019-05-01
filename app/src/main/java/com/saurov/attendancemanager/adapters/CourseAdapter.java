@@ -30,6 +30,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         void onClick(Course course, int position);
 
         void onMenuClick(Course course, int position);
+
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
