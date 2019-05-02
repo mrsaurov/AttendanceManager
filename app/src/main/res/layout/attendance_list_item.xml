@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:elevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/student_roll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            tools:text="1503064" />
+
+
+        <net.igenius.customcheckbox.CustomCheckBox
+            android:id="@+id/attendance_checkbox"
+            app:small_tick="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:color_checked="@android:color/holo_green_light"
+            app:color_unchecked_stroke="@color/error_red" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

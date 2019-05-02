@@ -34,8 +34,6 @@ public class CourseActivity extends AppCompatActivity{
 
     CourseAdapter adapter;
 
-
-
     public static final String EDIT_COURSE_FLAG = "EDIT_COURSE_FLAG";
     public static final String COURSE_ID_TAG = "COURSE_ID_TAG";
 
@@ -60,7 +58,7 @@ public class CourseActivity extends AppCompatActivity{
 
         List<Course> courseList = Course.listAll(Course.class);
 
-        courseRecyclerView = findViewById(R.id.course_recycler_view);
+//        courseRecyclerView = findViewById(R.id.course_recycler_view);
         adapter = new CourseAdapter(this, courseList);
         adapter.setOnItemClickListener(new CourseAdapter.OnItemClickListener() {
             @Override

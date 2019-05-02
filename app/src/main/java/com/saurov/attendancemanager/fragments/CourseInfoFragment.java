@@ -1,5 +1,6 @@
 package com.saurov.attendancemanager.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +10,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
+import com.saurov.attendancemanager.activities.TakeAttendanceActivity;
 import com.saurov.attendancemanager.database.Course;
 
 import butterknife.BindView;
@@ -31,6 +34,9 @@ public class CourseInfoFragment extends Fragment {
 
     @BindView(R.id.course_no_text_view)
     TextView courseNoTextView;
+
+    @BindView(R.id.take_attendance_button)
+    MaterialButton takeAttendanceButton;
 
     private Course course;
 
@@ -72,6 +78,16 @@ public class CourseInfoFragment extends Fragment {
 
         courseNameTextView.setText(course.getTitle());
         courseNoTextView.setText(course.getNumber());
+
+        takeAttendanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), TakeAttendanceActivity.class);
+                i.putExtra(TakeAttendanceActivity.TAG_COURSE_ID, courseId);
+                startActivity(i);
+            }
+        });
+
 
         return view;
     }
