@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.saurov.attendancemanager.R;
+import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
@@ -25,6 +26,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     private List<CourseStudent> courseStudents;
     private OnItemClickListener onItemClickListener;
     private Context context;
+
 
     public interface OnItemClickListener {
         void onClick(CourseStudent student, int position);
@@ -86,6 +88,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
             }
         });
 
+    }
+
+    public void refreshData(List<CourseStudent> data) {
+        this.courseStudents = data;
     }
 
     private int getAttendancePercentageProgressColor(int attendancePercentage) {

@@ -42,6 +42,8 @@ public class CourseStudentFragment extends Fragment {
     private long courseId;
     private Course course;
 
+    StudentAdapter adapter;
+
     public CourseStudentFragment() {
         // Required empty public constructor
     }
@@ -77,7 +79,7 @@ public class CourseStudentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_student, container, false);
         ButterKnife.bind(this, view);
 
-        StudentAdapter adapter = new StudentAdapter(getContext(), course.getStudents());
+        adapter = new StudentAdapter(getContext(), course.getStudents());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         studentRecyclerView.setLayoutManager(layoutManager);
@@ -100,5 +102,15 @@ public class CourseStudentFragment extends Fragment {
         return view;
     }
 
+    private void refreshStudentRecylerView() {
+        adapter.refreshData(course.getStudents());
+        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        refreshStudentRecylerView();
+    }
 }
