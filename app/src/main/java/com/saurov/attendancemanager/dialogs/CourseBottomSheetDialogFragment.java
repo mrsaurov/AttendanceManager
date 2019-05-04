@@ -9,16 +9,30 @@ import com.saurov.attendancemanager.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFragment {
 
 
+    public interface BottomSheetListener {
+        void onItemClicked(String selectionId);
+    }
+
+    private BottomSheetListener mListener;
+
+
     public static final String ITEM_EDIT = "CourseBottomSheetDialogFragment.EDIT";
     public static final String ITEM_DELETE = "CourseBottomSheetDialogFragment.DELETE";
     public static final String ITEM_OPEN = "CourseBottomSheetDialogFragment.OPEN";
+    public static final String ITEM_TAKE_ATTENDANCE = "CourseBottomSheetDialogFragment.TAKE_ATTENDANCE";
 
+
+
+    public void setOnItemClickListener(BottomSheetListener listener) {
+        this.mListener = listener;
+    }
 
     //Click on Edit Button
     @OnClick(R.id.editItem)
@@ -51,16 +65,16 @@ public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFra
         dismiss();
     }
 
+    //Click on Take Attendance
+    @OnClick(R.id.takeAttendanceItem)
+    public void takeAttendance(View view){
+        if (mListener!=null){
+            mListener.onItemClicked(ITEM_TAKE_ATTENDANCE);
+        }
 
-    public interface BottomSheetListener {
-        void onItemClicked(String selectionId);
+        dismiss();
     }
 
-    private BottomSheetListener mListener;
-
-    public void setOnItemClickListener(BottomSheetListener listener) {
-        this.mListener = listener;
-    }
 
 //    @Override
 //    public void onAttach(Context context) {

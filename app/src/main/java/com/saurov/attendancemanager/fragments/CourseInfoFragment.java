@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.android.material.button.MaterialButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
@@ -28,6 +31,12 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class CourseInfoFragment extends Fragment {
+
+    @BindView(R.id.course_series_image_view)
+    ImageView courseSeriesImageView;
+
+    @BindView(R.id.course_class)
+    TextView courseClass;
 
     @BindView(R.id.course_name_text_view)
     TextView courseNameTextView;
@@ -87,6 +96,17 @@ public class CourseInfoFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+
+        int color = generator.getColor(course.getSeries());
+
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRound(course.getSeries(), color);
+
+        courseSeriesImageView.setImageDrawable(drawable);
+
+        courseClass.setText(course.getDepartment() + " " + course.getSeries() + " " + course.getSection());
 
 
         return view;

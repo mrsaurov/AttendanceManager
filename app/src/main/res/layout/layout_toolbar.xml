@@ -1,10 +1,11 @@
-<androidx.appcompat.widget.Toolbar android:id="@+id/my_toolbar"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     android:elevation="4dp"
-    app:titleTextColor="@color/appbar_title_text_color"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" />
+    app:titleTextColor="@color/appbar_title_text_color"
+    app:subtitleTextColor="@color/appbar_title_text_color"/>

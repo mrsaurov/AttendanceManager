@@ -2,19 +2,44 @@ package com.saurov.attendancemanager.database;
 
 import com.orm.SugarRecord;
 
+import java.util.Random;
+
 public class CourseStudent extends SugarRecord<CourseStudent> {
 
 
     // Each CourseStudent Belongs to A Course
     private Course course;
     private int roll;
-    private double attendancePercentage;
+    private int attendancePercentage;
     private int attendanceMark;
 
 
     public CourseStudent() {
+
         attendancePercentage = 0;
         attendanceMark = 0;
+
+    }
+
+    public int percentageToMark(int attendancePercentage) {
+
+        int obtainedMark;
+
+        if (attendancePercentage >= 90) {
+            obtainedMark = 8;
+        } else if (attendancePercentage >= 85) {
+            obtainedMark = 7;
+        } else if (attendancePercentage >= 80) {
+            obtainedMark = 6;
+        } else if (attendancePercentage >= 70) {
+            obtainedMark = 5;
+        } else if (attendancePercentage >= 60) {
+            obtainedMark = 4;
+        } else {
+            obtainedMark = 0;
+        }
+
+        return obtainedMark;
     }
 
     public Course getCourse() {
@@ -33,11 +58,11 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
         this.roll = roll;
     }
 
-    public double getAttendancePercentage() {
+    public int getAttendancePercentage() {
         return attendancePercentage;
     }
 
-    public void setAttendancePercentage(double attendancePercentage) {
+    public void setAttendancePercentage(int attendancePercentage) {
         this.attendancePercentage = attendancePercentage;
     }
 

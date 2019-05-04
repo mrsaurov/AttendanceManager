@@ -50,10 +50,11 @@
             android:hint="Readmitted Students (Comma Seperated)">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/enrollment_readmitted_roll"
+                android:id="@+id/enrollment_readmitted_rolls"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="number"
+                android:digits="0123456789,"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,13 +62,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Series">
+            android:hint="Excluding (Comma Seperated)">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/series_edit_text"
+                android:id="@+id/excluded_rolls"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:digits="0123456789,"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

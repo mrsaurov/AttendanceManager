@@ -1,5 +1,7 @@
 package com.saurov.attendancemanager.adapters;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import com.saurov.attendancemanager.database.CourseStudent;
 
 import net.igenius.customcheckbox.CustomCheckBox;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,10 +24,40 @@ import butterknife.ButterKnife;
 
 public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.MyViewHolder> {
 
-    private List<CourseStudent> studentList;
+    public interface onAttendanceCheckboxClickedListener {
 
-    public AttendanceAdapter(List<CourseStudent> studentList) {
+        void onClick(CourseStudent student, boolean isChecked,
+                     List<CourseStudent> selectedStudents, CustomCheckBox checkbox, int position);
+    }
+
+    private Context context;
+    private List<CourseStudent> studentList;
+    private List<CourseStudent> selectedStudentList;
+    onAttendanceCheckboxClickedListener listener;
+//    private boolean isSelectedAll = false;
+
+    public void selectAllStudents() {
+        selectedStudentList.clear();
+        selectedStudentList.addAll(studentList);
+//        isSelectedAll = true;
+        notifyDataSetChanged();
+    }
+
+    public void clearAllStudents() {
+        selectedStudentList.clear();
+//        isSelectedAll = false;
+        notifyDataSetChanged();
+    }
+
+
+    public AttendanceAdapter(Context context, List<CourseStudent> studentList) {
+        this.context = context;
         this.studentList = studentList;
+        this.selectedStudentList = new ArrayList<>();
+    }
+
+    public void setOnAttendanceCheckboxClickedListener(onAttendanceCheckboxClickedListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -42,6 +76,34 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
 
         holder.studentRoll.setText(Integer.toString(student.getRoll()));
 
+        if (selectedStudentList.contains(student)){
+            holder.attendanceCheckBox.setChecked(true);
+        }else {
+            holder.attendanceCheckBox.setChecked(false);
+        }
+
+//        if (isSelectedAll){
+//            holder.attendanceCheckBox.setChecked(true);
+//        }else {
+//            holder.attendanceCheckBox.setChecked(false);
+//        }
+
+        holder.attendanceCheckBox.setOnCheckedChangeListener(new CustomCheckBox.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CustomCheckBox checkBox, boolean isChecked) {
+
+                if (listener != null) {
+                    listener.onClick(student, isChecked, selectedStudentList, checkBox, position);
+                }
+
+            }
+        });
+
+
+    }
+
+    public List<CourseStudent> getSelectedStudentList() {
+        return selectedStudentList;
     }
 
     @Override

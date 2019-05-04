@@ -18,6 +18,9 @@ import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class AddStudentActivity extends AppCompatActivity {
 
     @BindView(R.id.enrollment_first_roll)
@@ -26,8 +29,11 @@ public class AddStudentActivity extends AppCompatActivity {
     @BindView(R.id.enrollment_last_roll)
     TextInputEditText lastRollEditText;
 
-    @BindView(R.id.enrollment_readmitted_roll)
-    TextInputEditText readmittedEditText;
+    @BindView(R.id.enrollment_readmitted_rolls)
+    TextInputEditText readmittedRollsEditText;
+
+    @BindView(R.id.excluded_rolls)
+    TextInputEditText excludedRollsEditText;
 
     @BindView(R.id.save_button)
     MaterialButton saveButton;
@@ -57,9 +63,37 @@ public class AddStudentActivity extends AppCompatActivity {
                 int firstRoll = Integer.parseInt(firstRollEditText.getText().toString());
                 int lastRoll = Integer.parseInt(lastRollEditText.getText().toString());
 
+                String[] excluded = excludedRollsEditText.getText().toString().split(",");
+                String[] readmitted = readmittedRollsEditText.getText().toString().split(",");
+
+                Set<Integer> excludedSet = new HashSet<>(excluded.length);
+                Set<Integer> readmittedSet = new HashSet<>(readmitted.length);
+
+                for (String s : excluded) {
+                    try {
+                        excludedSet.add(Integer.parseInt(s.trim()));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (String s : readmitted) {
+                    try {
+                        readmittedSet.add(Integer.parseInt(s.trim()));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
                 if (lastRoll > firstRoll) {
 
                     for (int i = firstRoll; i <= lastRoll; i++) {
+
+                        // Excluded then dont add
+                        if (excludedSet.contains(i)){
+                            continue;
+                        }
 
                         CourseStudent student = new CourseStudent();
 
@@ -67,6 +101,19 @@ public class AddStudentActivity extends AppCompatActivity {
                         student.setCourse(SugarRecord.findById(Course.class, courseId));
 
                         student.save();
+                    }
+
+                    //Adding readmitted students
+
+                    for (int i : readmittedSet){
+
+                        CourseStudent student = new CourseStudent();
+
+                        student.setRoll(i);
+                        student.setCourse(SugarRecord.findById(Course.class, courseId));
+
+                        student.save();
+
                     }
 
                     finish();

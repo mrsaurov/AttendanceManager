@@ -3,7 +3,12 @@ package com.saurov.attendancemanager.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.LayoutInflaterCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
@@ -13,18 +18,12 @@ import com.saurov.attendancemanager.adapters.CourseAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.dialogs.CourseBottomSheetDialogFragment;
 
-import java.util.Calendar;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.LayoutInflaterCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CourseActivity extends AppCompatActivity{
+public class CourseActivity extends AppCompatActivity {
 
     @BindView(R.id.add_course_fab)
     FloatingActionButton fab;
@@ -58,7 +57,6 @@ public class CourseActivity extends AppCompatActivity{
 
         List<Course> courseList = Course.listAll(Course.class);
 
-//        courseRecyclerView = findViewById(R.id.course_recycler_view);
         adapter = new CourseAdapter(this, courseList);
         adapter.setOnItemClickListener(new CourseAdapter.OnItemClickListener() {
             @Override
@@ -107,6 +105,12 @@ public class CourseActivity extends AppCompatActivity{
                                 startActivity(intent);
 
                                 break;
+                            case CourseBottomSheetDialogFragment.ITEM_TAKE_ATTENDANCE:
+
+                                intent = new Intent(CourseActivity.this, TakeAttendanceActivity.class);
+                                intent.putExtra(TakeAttendanceActivity.TAG_COURSE_ID, course.getId());
+                                startActivity(intent);
+                                break;
                         }
                     }
                 });
@@ -117,15 +121,12 @@ public class CourseActivity extends AppCompatActivity{
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 
-//        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-
         courseRecyclerView.setLayoutManager(layoutManager);
         courseRecyclerView.setItemAnimator(new DefaultItemAnimator());
         courseRecyclerView.setAdapter(adapter);
     }
 
-    private void refreshCourseRecylerView(){
+    private void refreshCourseRecylerView() {
         adapter.refreshData(SugarRecord.listAll(Course.class));
         adapter.notifyDataSetChanged();
     }

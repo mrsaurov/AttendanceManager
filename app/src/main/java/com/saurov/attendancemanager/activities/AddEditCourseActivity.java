@@ -39,7 +39,7 @@ public class AddEditCourseActivity extends AppCompatActivity {
     @BindView(R.id.course_no_edit_text)
     TextInputEditText courseNo;
 
-    @BindView(R.id.series_edit_text)
+    @BindView(R.id.excluded_rolls)
     TextInputEditText series;
 
     @BindView(R.id.section_spinner)

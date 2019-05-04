@@ -26,13 +26,13 @@
             android:maxLines="1"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/attendance_mark_circular_progress"
+            app:layout_constraintEnd_toStartOf="@+id/attendance_percentage_circular_progress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1503064" />
 
         <com.vaibhavlakhera.circularprogressview.CircularProgressView
-            android:id="@+id/attendance_percentage_circular_progress"
+            android:id="@+id/attendance_mark_circular_progress"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="8dp"
@@ -49,12 +49,11 @@
             app:progressTextColor="@android:color/black"
             app:progressTextEnabled="true"
             app:progressTextSize="15sp"
-            app:progressTextType="percent"
-            app:progressValue="30"
+            app:progressTextType="progress"
             app:progressWidth="7dp"
             app:startAngle="270"
             app:totalColor="@color/circular_progress_total_color"
-            app:totalValue="100"
+            app:totalValue="8"
             app:totalWidth="5dp" />
 
         <TextView
@@ -63,20 +62,20 @@
             android:layout_height="wrap_content"
             android:text="Attendance"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="@+id/attendance_mark_circular_progress"
-            app:layout_constraintStart_toStartOf="@+id/attendance_mark_circular_progress" />
+            app:layout_constraintEnd_toEndOf="@+id/attendance_percentage_circular_progress"
+            app:layout_constraintStart_toStartOf="@+id/attendance_percentage_circular_progress" />
 
         <com.vaibhavlakhera.circularprogressview.CircularProgressView
-            android:id="@+id/attendance_mark_circular_progress"
+            android:id="@+id/attendance_percentage_circular_progress"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginEnd="16dp"
             app:animate="true"
             app:animateDuration="600"
             app:fillColor="@android:color/background_light"
-            app:layout_constraintBottom_toBottomOf="@+id/attendance_percentage_circular_progress"
-            app:layout_constraintEnd_toStartOf="@+id/attendance_percentage_circular_progress"
-            app:layout_constraintTop_toTopOf="@+id/attendance_percentage_circular_progress"
+            app:layout_constraintBottom_toBottomOf="@+id/attendance_mark_circular_progress"
+            app:layout_constraintEnd_toStartOf="@+id/attendance_mark_circular_progress"
+            app:layout_constraintTop_toTopOf="@+id/attendance_mark_circular_progress"
             app:progressColor="#d50000"
             app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
             app:progressRoundCap="true"
@@ -84,7 +83,6 @@
             app:progressTextEnabled="true"
             app:progressTextSize="15sp"
             app:progressTextType="percent"
-            app:progressValue="30"
             app:progressWidth="7dp"
             app:startAngle="270"
             app:totalColor="@color/circular_progress_total_color"
@@ -99,9 +97,9 @@
             android:layout_marginBottom="8dp"
             android:text="Mark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/attendance_percentage_circular_progress"
-            app:layout_constraintStart_toStartOf="@+id/attendance_percentage_circular_progress"
-            app:layout_constraintTop_toBottomOf="@+id/attendance_percentage_circular_progress" />
+            app:layout_constraintEnd_toEndOf="@+id/attendance_mark_circular_progress"
+            app:layout_constraintStart_toStartOf="@+id/attendance_mark_circular_progress"
+            app:layout_constraintTop_toBottomOf="@+id/attendance_mark_circular_progress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

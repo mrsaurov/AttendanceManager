@@ -77,7 +77,7 @@ public class CourseStudentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_student, container, false);
         ButterKnife.bind(this, view);
 
-        StudentAdapter adapter = new StudentAdapter(course.getStudents());
+        StudentAdapter adapter = new StudentAdapter(getContext(), course.getStudents());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         studentRecyclerView.setLayoutManager(layoutManager);

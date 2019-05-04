@@ -20,4 +20,13 @@
     <color name="bottom_sheet_icon_color">#737373</color>
     <color name="appbar_title_text_color">@color/black</color>
     <color name="circular_progress_total_color">#E0E0E0</color>
+
+    <color name="tab_text_color">@color/black</color>
+    <color name="windowBackgroundColor">@color/white</color>
+
+
+    <color name="progress_excellent">#388E3C</color>
+    <color name="progress_good">#66BB6A</color>
+    <color name="progress_average">#FF9800</color>
+    <color name="progress_bad">#d50000</color>
 </resources>

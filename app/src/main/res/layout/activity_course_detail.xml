@@ -12,7 +12,7 @@
         android:id="@+id/course_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/my_toolbar"
+        android:layout_below="@id/toolbar"
         android:minHeight="?actionBarSize"
         app:tabGravity="fill"
         app:tabIndicatorHeight="2dp"

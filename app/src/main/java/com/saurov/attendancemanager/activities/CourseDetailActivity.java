@@ -3,6 +3,7 @@ package com.saurov.attendancemanager.activities;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.LayoutInflaterCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import butterknife.BindView;
@@ -14,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
+import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseTabAdapter;
@@ -34,12 +36,13 @@ public class CourseDetailActivity extends AppCompatActivity {
     @BindView(R.id.course_tab_layout)
     TabLayout courseTabLayout;
 
-    @BindView(R.id.my_toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
 

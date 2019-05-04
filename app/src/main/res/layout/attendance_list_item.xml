@@ -14,21 +14,23 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
+
+        <net.igenius.customcheckbox.CustomCheckBox
+            android:id="@+id/attendance_checkbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:color_checked="@android:color/holo_green_light"
+            app:color_unchecked_stroke="@color/error_red"
+            app:small_tick="true" />
+
         <TextView
             android:id="@+id/student_roll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
             tools:text="1503064" />
 
-
-        <net.igenius.customcheckbox.CustomCheckBox
-            android:id="@+id/attendance_checkbox"
-            app:small_tick="true"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:color_checked="@android:color/holo_green_light"
-            app:color_unchecked_stroke="@color/error_red" />
 
     </LinearLayout>
 

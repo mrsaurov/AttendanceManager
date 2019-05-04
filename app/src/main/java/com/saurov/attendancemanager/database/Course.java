@@ -11,6 +11,7 @@ public class Course extends SugarRecord<Course> {
     private String series;
     private String department;
     private String section;
+    private int totalClassTaken;
 
     public Course() {
     }
@@ -21,6 +22,7 @@ public class Course extends SugarRecord<Course> {
         this.series = series;
         this.department = department;
         this.section = section;
+        this.totalClassTaken = 0;
     }
 
     public List<CourseStudent> getStudents() {
@@ -65,5 +67,13 @@ public class Course extends SugarRecord<Course> {
 
     public void setSection(String section) {
         this.section = section;
+    }
+
+    public int getTotalClassTaken() {
+        return totalClassTaken;
+    }
+
+    public void setTotalClassTaken(int totalClassTaken) {
+        this.totalClassTaken = totalClassTaken;
     }
 }
