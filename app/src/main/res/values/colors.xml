@@ -29,4 +29,6 @@
     <color name="progress_good">#66BB6A</color>
     <color name="progress_average">#FF9800</color>
     <color name="progress_bad">#d50000</color>
+
+    <color name="search_hint_color">#737373</color>
 </resources>

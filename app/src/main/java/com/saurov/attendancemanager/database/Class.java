@@ -1,32 +1,16 @@
 package com.saurov.attendancemanager.database;
 
-import com.orm.SugarDb;
 import com.orm.SugarRecord;
 
-public class Attendance extends SugarRecord<Attendance> {
-
-    private CourseStudent courseStudent;
+public class Class{
     private String day;
     private String cycle;
     private long timestamp;
 
-    public Attendance() {
-
-    }
-
-    public Attendance(CourseStudent courseStudent, String day, String cycle, long timestamp) {
-        this.courseStudent = courseStudent;
+    public Class(String day, String cycle, long timestamp) {
         this.day = day;
         this.cycle = cycle;
         this.timestamp = timestamp;
-    }
-
-    public CourseStudent getCourseStudent() {
-        return courseStudent;
-    }
-
-    public void setCourseStudent(CourseStudent courseStudent) {
-        this.courseStudent = courseStudent;
     }
 
     public String getDay() {

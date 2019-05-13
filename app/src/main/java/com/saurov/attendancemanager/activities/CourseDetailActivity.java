@@ -1,18 +1,15 @@
 package com.saurov.attendancemanager.activities;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.LayoutInflaterCompat;
 import androidx.viewpager.widget.ViewPager;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
@@ -20,8 +17,12 @@ import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseTabAdapter;
 import com.saurov.attendancemanager.database.Course;
+import com.saurov.attendancemanager.fragments.ClassFragment;
 import com.saurov.attendancemanager.fragments.CourseInfoFragment;
 import com.saurov.attendancemanager.fragments.CourseStudentFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -68,7 +69,6 @@ public class CourseDetailActivity extends AppCompatActivity {
 
         initializeTabs(courseId);
 
-
     }
 
     private void initializeTabs(long courseId) {
@@ -82,6 +82,10 @@ public class CourseDetailActivity extends AppCompatActivity {
         CourseStudentFragment studentFragment = CourseStudentFragment.newInstance(courseId);
 
         mTabAdapter.addFragment(studentFragment, "Students");
+
+        ClassFragment classFragment = ClassFragment.newInstance(courseId);
+
+        mTabAdapter.addFragment(classFragment, "Classes");
 
         courseViewPager.setAdapter(mTabAdapter);
 

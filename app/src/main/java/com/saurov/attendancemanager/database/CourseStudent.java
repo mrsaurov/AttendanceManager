@@ -1,6 +1,7 @@
 package com.saurov.attendancemanager.database;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.Random;
 
@@ -13,9 +14,20 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
     private int attendancePercentage;
     private int attendanceMark;
 
+    @Ignore
+    private boolean isSelected;
+
+    public boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public CourseStudent() {
 
+        isSelected = false;
         attendancePercentage = 0;
         attendanceMark = 0;
 

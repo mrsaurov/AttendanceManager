@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,22 +13,22 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.saurov.attendancemanager.R;
-import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHolder> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHolder> implements Filterable {
 
-    private List<CourseStudent> courseStudents;
+    private List<CourseStudent> courseStudentsList;
+    private List<CourseStudent> courseStudentsListFull;
     private OnItemClickListener onItemClickListener;
     private Context context;
-
 
     public interface OnItemClickListener {
         void onClick(CourseStudent student, int position);
@@ -36,9 +38,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         this.onItemClickListener = onItemClickListener;
     }
 
-    public StudentAdapter(Context context, List<CourseStudent> courseStudents) {
+    public StudentAdapter(Context context, List<CourseStudent> courseStudentsList) {
         this.context = context;
-        this.courseStudents = courseStudents;
+        this.courseStudentsList = courseStudentsList;
+        this.courseStudentsListFull = new ArrayList<>(courseStudentsList);
     }
 
     @NonNull
@@ -55,9 +58,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        CourseStudent student = courseStudents.get(position);
+        CourseStudent student = courseStudentsList.get(position);
 
-        holder.studentRoll.setText(Integer.toString(student.getRoll()));
+        holder.studentRoll.setText(String.valueOf(student.getRoll()));
 
         //Randomly generating for testing
 
@@ -91,7 +94,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     }
 
     public void refreshData(List<CourseStudent> data) {
-        this.courseStudents = data;
+        this.courseStudentsList = data;
     }
 
     private int getAttendancePercentageProgressColor(int attendancePercentage) {
@@ -122,9 +125,47 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
     }
 
+
+    @Override
+    public Filter getFilter() {
+        return studentFilter;
+    }
+
+    private Filter studentFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CourseStudent> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(courseStudentsListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CourseStudent item : courseStudentsListFull) {
+                    if (String.valueOf(item.getRoll()).contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            courseStudentsList.clear();
+            courseStudentsList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
     @Override
     public int getItemCount() {
-        return courseStudents.size();
+        return courseStudentsList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

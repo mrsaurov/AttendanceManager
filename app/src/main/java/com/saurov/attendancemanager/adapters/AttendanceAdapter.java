@@ -33,14 +33,35 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
     private Context context;
     private List<CourseStudent> studentList;
     private List<CourseStudent> selectedStudentList;
-    onAttendanceCheckboxClickedListener listener;
+    private onAttendanceCheckboxClickedListener listener;
 //    private boolean isSelectedAll = false;
 
     public void selectAllStudents() {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (CourseStudent s : selectedStudentList) {
+            sb.append(s.getRoll()).append(", ");
+        }
+
+        Log.d("TAG1", sb.toString());
+
         selectedStudentList.clear();
+
+//        selectedStudentList.add(studentList.get(0));
+//        selectedStudentList.add(studentList.get(3));
         selectedStudentList.addAll(studentList);
 //        isSelectedAll = true;
         notifyDataSetChanged();
+
+        sb = new StringBuilder();
+
+        for (CourseStudent s : selectedStudentList) {
+            sb.append(s.getRoll()).append(", ");
+        }
+
+        Log.d("TAG2", sb.toString());
+
     }
 
     public void clearAllStudents() {
@@ -72,13 +93,21 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+        StringBuilder sb = new StringBuilder();
+
+        for (CourseStudent s : selectedStudentList) {
+            sb.append(s.getRoll()).append(", ");
+        }
+
+        Log.d("onBind", sb.append("  " + position).toString());
+
         CourseStudent student = studentList.get(position);
 
         holder.studentRoll.setText(Integer.toString(student.getRoll()));
 
-        if (selectedStudentList.contains(student)){
+        if (selectedStudentList.contains(student)) {
             holder.attendanceCheckBox.setChecked(true);
-        }else {
+        } else {
             holder.attendanceCheckBox.setChecked(false);
         }
 
@@ -92,10 +121,11 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
             @Override
             public void onCheckedChanged(CustomCheckBox checkBox, boolean isChecked) {
 
+                Log.d("CHECK", position + " ");
+
                 if (listener != null) {
                     listener.onClick(student, isChecked, selectedStudentList, checkBox, position);
                 }
-
             }
         });
 

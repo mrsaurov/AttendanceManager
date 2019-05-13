@@ -2,7 +2,6 @@ package com.saurov.attendancemanager.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +27,7 @@ import com.google.android.material.button.MaterialButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.AttendanceAdapter;
+import com.saurov.attendancemanager.adapters.AttendanceAdapter2;
 import com.saurov.attendancemanager.database.Attendance;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
@@ -42,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TakeAttendanceActivity extends AppCompatActivity {
+
 
     @BindView(R.id.attendance_recycler_view)
     RecyclerView attendanceRecyclerView;
@@ -58,10 +59,9 @@ public class TakeAttendanceActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-
-    AttendanceAdapter adapter;
+    AttendanceAdapter2 adapter;
+//    AttendanceAdapter adapter;
     ActionBar actionBar;
-
 
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
 
@@ -86,64 +86,65 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 
         List<CourseStudent> courseStudents = course.getStudents();
 
-        adapter = new AttendanceAdapter(this, courseStudents);
+        adapter = new AttendanceAdapter2(this, courseStudents);
 
-        adapter.setOnAttendanceCheckboxClickedListener(new AttendanceAdapter.onAttendanceCheckboxClickedListener() {
-            @Override
-            public void onClick(CourseStudent student, boolean isChecked, List<CourseStudent> selectedStudents, CustomCheckBox checkbox, int position) {
-
-                if (isChecked) {
-                    selectedStudents.add(student);
-                } else {
-                    selectedStudents.remove(student);
-                }
-
-                StringBuilder stringBuilder = new StringBuilder();
-
-                for (CourseStudent i : selectedStudents) {
-                    stringBuilder.append(i.getRoll() + ", ");
-                }
-
-                Toast.makeText(TakeAttendanceActivity.this, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
-
-            }
-
-        });
-
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                List<CourseStudent> selectedStudents = adapter.getSelectedStudentList();
-
-                String cycle = cycleEditText.getText().toString();
-
-                String day = daySpinner.getSelectedItem().toString();
+//        adapter.setOnAttendanceCheckboxClickedListener(new AttendanceAdapter.onAttendanceCheckboxClickedListener() {
+//            @Override
+//            public void onClick(CourseStudent student, boolean isChecked, List<CourseStudent> selectedStudents, CustomCheckBox checkbox, int position) {
+//
+//                if (isChecked) {
+//                    selectedStudents.add(student);
+//                } else {
+//                    selectedStudents.remove(student);
+//                }
+//
+//                StringBuilder stringBuilder = new StringBuilder();
+//
+//                for (CourseStudent i : selectedStudents) {
+//                    stringBuilder.append(i.getRoll()).append(", ");
+//                }
+//
+//                Toast.makeText(TakeAttendanceActivity.this, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
+//
+//
+//            }
+//
+//        });
 
 
-                for (CourseStudent student : selectedStudents) {
-                    Attendance attendance = new Attendance();
-
-
-                    attendance.setCourseStudent(student);
-                    attendance.setTimestamp(System.currentTimeMillis());
-                    attendance.setDay(day);
-                    attendance.setCycle(cycle);
-
-                    attendance.save();
-
-
-                    // Update course info and student attendance percentage
-//                    course.setTotalClassTaken(course.getTotalClassTaken() + 1);
-
-//                    student.
-
-                }
-
-                finish();
-            }
-        });
+//        saveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                List<CourseStudent> selectedStudents = adapter.getSelectedStudentList();
+//
+//                String cycle = cycleEditText.getText().toString();
+//
+//                String day = daySpinner.getSelectedItem().toString();
+//
+//
+//                for (CourseStudent student : selectedStudents) {
+//                    Attendance attendance = new Attendance();
+//
+//
+//                    attendance.setCourseStudent(student);
+//                    attendance.setTimestamp(System.currentTimeMillis());
+//                    attendance.setDay(day);
+//                    attendance.setCycle(cycle);
+//
+//                    attendance.save();
+//
+//
+//                    // Update course info and student attendance percentage
+////                    course.setTotalClassTaken(course.getTotalClassTaken() + 1);
+//
+////                    student.
+//
+//                }
+//
+//                finish();
+//            }
+//        });
 
 
         GridLayoutManager layoutManager =
@@ -261,8 +262,6 @@ public class TakeAttendanceActivity extends AppCompatActivity {
             case R.id.deselect_all:
                 adapter.clearAllStudents();
                 break;
-
-
         }
 
 

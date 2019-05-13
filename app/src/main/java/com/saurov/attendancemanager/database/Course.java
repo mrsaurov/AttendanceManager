@@ -1,6 +1,11 @@
 package com.saurov.attendancemanager.database;
 
+import android.util.Log;
+
+import com.orm.SugarCursorFactory;
 import com.orm.SugarRecord;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.util.List;
 
@@ -27,6 +32,16 @@ public class Course extends SugarRecord<Course> {
 
     public List<CourseStudent> getStudents() {
         return SugarRecord.find(CourseStudent.class, "course = ?", String.valueOf(this.getId()));
+    }
+
+    public List<Attendance> getAllClasses() {
+
+        List<Attendance> classes =
+                Select.from(Attendance.class).groupBy("cycle,day").list();
+        Log.d("Saurov", "getAllClasses: " + classes.get(2).getDay() + classes.get(2).getCycle());
+
+        return classes;
+//        return SugarRecord.find(Attendance.class, "course_id = ?", String.valueOf(this.getId()));
     }
 
     public String getNumber() {
