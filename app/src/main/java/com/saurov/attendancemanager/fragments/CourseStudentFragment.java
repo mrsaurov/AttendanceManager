@@ -70,8 +70,6 @@ public class CourseStudentFragment extends Fragment {
             courseId = getArguments().getLong(ARG_COURSE_ID);
 
             course = SugarRecord.findById(Course.class, courseId);
-
-            List<CourseStudent> courseStudents = course.getStudents();
         }
     }
 

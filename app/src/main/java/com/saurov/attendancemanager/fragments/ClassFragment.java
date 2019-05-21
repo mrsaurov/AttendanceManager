@@ -4,6 +4,9 @@ package com.saurov.attendancemanager.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +14,14 @@ import android.view.ViewGroup;
 
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
+import com.saurov.attendancemanager.adapters.ClassAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,12 +29,14 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ClassFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_COURSE_ID = "param1";
 
     private long courseId;
     private Course course;
+    private ClassAdapter adapter;
+
+    @BindView(R.id.class_recycler_view)
+    RecyclerView classRecyclerView;
 
     public ClassFragment() {
         // Required empty public constructor
@@ -61,7 +70,18 @@ public class ClassFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_class, container, false);
+        View view = inflater.inflate(R.layout.fragment_class, container, false);
+
+        ButterKnife.bind(this, view);
+
+        adapter = new ClassAdapter(getContext(), course.getAllClasses());
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        classRecyclerView.setLayoutManager(layoutManager);
+        classRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        classRecyclerView.setAdapter(adapter);
+
+        return view;
     }
 
 }

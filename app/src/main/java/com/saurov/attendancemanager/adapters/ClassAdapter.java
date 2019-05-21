@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.saurov.attendancemanager.R;
-import com.saurov.attendancemanager.database.Attendance;
+import com.saurov.attendancemanager.database.CourseClass;
 
 import java.util.List;
 
@@ -22,11 +23,11 @@ import butterknife.ButterKnife;
 public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder> {
 
     private Context context;
-    private List<Attendance> classAttendance;
+    private List<CourseClass> courseClassList;
 
-    public ClassAdapter(Context context, List<Attendance> classAttendance) {
+    public ClassAdapter(Context context, List<CourseClass> courseClassList) {
         this.context = context;
-        this.classAttendance = classAttendance;
+        this.courseClassList = courseClassList;
     }
 
     @NonNull
@@ -42,30 +43,37 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Attendance attendance = classAttendance.get(position);
+        CourseClass courseClass = courseClassList.get(position);
+
+        String className = courseClass.getCycle() + courseClass.getDay();
 
         ColorGenerator generator = ColorGenerator.MATERIAL;
 
-        int color = generator.getColor(attendance.getCycle());
-
-        String text = attendance.getCycle() + attendance.getDay();
-
+        int color = generator.getColor(courseClass.getCycle());
         TextDrawable drawable = TextDrawable.builder()
-                .buildRound(text, color);
+                .buildRound(className, color);
 
-        holder.courseSeriesImageView.setImageDrawable(drawable);
+        holder.courseNameImageView.setImageDrawable(drawable);
+        holder.classTimeTextView.setText(courseClass.getHumanReadableDate());
+        holder.classSummaryTextView.setText("Student Present: " + courseClass.getTotalStudentPresent());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return courseClassList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.course_series_image_view)
-        ImageView courseSeriesImageView;
+        @BindView(R.id.class_name_image_view)
+        ImageView courseNameImageView;
+
+        @BindView(R.id.class_time)
+        TextView classTimeTextView;
+
+        @BindView(R.id.class_summary)
+        TextView classSummaryTextView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

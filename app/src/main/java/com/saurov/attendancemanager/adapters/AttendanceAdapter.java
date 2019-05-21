@@ -16,7 +16,6 @@ import com.saurov.attendancemanager.database.CourseStudent;
 import net.igenius.customcheckbox.CustomCheckBox;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;

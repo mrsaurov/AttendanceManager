@@ -1,6 +1,7 @@
 package com.saurov.attendancemanager.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,18 +65,22 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
         //Randomly generating for testing
 
-        Random random = new Random(System.currentTimeMillis());
+//        Random random = new Random(System.currentTimeMillis());
 
-        student.setAttendancePercentage(random.nextInt(100));
+//        student.setAttendancePercentage(random.nextInt(100));
 
-        student.setAttendanceMark(student.percentageToMark(student.getAttendancePercentage()));
+//        if (student.getRoll() == 1503065){
+        Log.d("Saurov", "student : " + student.getRoll() + " " + student.getAttendancePercentage());
+//        }
 
-        holder.attendancePercentageCircularProgress.setProgress(student.getAttendancePercentage(), true);
-        holder.attendanceMarkCircularProgress.setProgress(student.getAttendanceMark(), true);
+        double attendancePercentage = student.getAttendancePercentage();
+
+        holder.attendancePercentageCircularProgress.setProgress((int) Math.round(attendancePercentage), false);
+        holder.attendanceMarkCircularProgress.setProgress(student.getAttendanceMark(), false);
 
 
         holder.attendancePercentageCircularProgress
-                .setProgressColor(getAttendancePercentageProgressColor(student.getAttendancePercentage()));
+                .setProgressColor(getAttendancePercentageProgressColor(attendancePercentage));
 
         holder.attendanceMarkCircularProgress
                 .setProgressColor(getAttendanceMarkProgressColor(student.getAttendanceMark()));
@@ -97,7 +102,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         this.courseStudentsList = data;
     }
 
-    private int getAttendancePercentageProgressColor(int attendancePercentage) {
+    private int getAttendancePercentageProgressColor(double attendancePercentage) {
 
         if (attendancePercentage == 100) {
             return ContextCompat.getColor(context, R.color.progress_excellent);

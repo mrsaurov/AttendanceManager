@@ -1,24 +1,19 @@
 package com.saurov.attendancemanager.database;
 
-import com.orm.SugarDb;
 import com.orm.SugarRecord;
 
 public class Attendance extends SugarRecord<Attendance> {
 
     private CourseStudent courseStudent;
-    private String day;
-    private String cycle;
-    private long timestamp;
+    private CourseClass courseClass;
 
     public Attendance() {
 
     }
 
-    public Attendance(CourseStudent courseStudent, String day, String cycle, long timestamp) {
+    public Attendance(CourseStudent courseStudent, CourseClass courseClass) {
         this.courseStudent = courseStudent;
-        this.day = day;
-        this.cycle = cycle;
-        this.timestamp = timestamp;
+        this.courseClass = courseClass;
     }
 
     public CourseStudent getCourseStudent() {
@@ -29,27 +24,13 @@ public class Attendance extends SugarRecord<Attendance> {
         this.courseStudent = courseStudent;
     }
 
-    public String getDay() {
-        return day;
+    public CourseClass getCourseClass() {
+        return courseClass;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setCourseClass(CourseClass courseClass) {
+        this.courseClass = courseClass;
     }
 
-    public String getCycle() {
-        return cycle;
-    }
 
-    public void setCycle(String cycle) {
-        this.cycle = cycle;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
 }

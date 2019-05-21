@@ -3,7 +3,6 @@ package com.saurov.attendancemanager.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.google.android.material.button.MaterialButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.activities.TakeAttendanceActivity;
-import com.saurov.attendancemanager.database.Attendance;
 import com.saurov.attendancemanager.database.Course;
 
 import butterknife.BindView;
@@ -34,10 +32,10 @@ import butterknife.ButterKnife;
  */
 public class CourseInfoFragment extends Fragment {
 
-    @BindView(R.id.course_series_image_view)
+    @BindView(R.id.class_name_image_view)
     ImageView courseSeriesImageView;
 
-    @BindView(R.id.course_class)
+    @BindView(R.id.class_summary)
     TextView courseClass;
 
     @BindView(R.id.course_name_text_view)
@@ -45,6 +43,12 @@ public class CourseInfoFragment extends Fragment {
 
     @BindView(R.id.course_no_text_view)
     TextView courseNoTextView;
+
+    @BindView(R.id.last_class_text_view)
+    TextView lastClassTextView;
+
+    @BindView(R.id.total_class_taken_text_view)
+    TextView totalClassTakenTextView;
 
     @BindView(R.id.take_attendance_button)
     MaterialButton takeAttendanceButton;
@@ -96,7 +100,7 @@ public class CourseInfoFragment extends Fragment {
         courseNameTextView.setText(course.getTitle());
         courseNoTextView.setText(course.getNumber());
 
-        course.getAllClasses();
+//        course.getAllClasses();
 
         takeAttendanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +122,7 @@ public class CourseInfoFragment extends Fragment {
 
         courseClass.setText(course.getDepartment() + " " + course.getSeries() + " " + course.getSection());
 
+        totalClassTakenTextView.setText(String.valueOf(course.getTotalClassTaken()));
 
         return view;
     }

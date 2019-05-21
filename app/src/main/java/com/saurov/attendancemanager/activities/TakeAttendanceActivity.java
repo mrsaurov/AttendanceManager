@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,13 +25,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
-import com.saurov.attendancemanager.adapters.AttendanceAdapter;
 import com.saurov.attendancemanager.adapters.AttendanceAdapter2;
 import com.saurov.attendancemanager.database.Attendance;
+import com.saurov.attendancemanager.database.CourseClass;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
-
-import net.igenius.customcheckbox.CustomCheckBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +57,7 @@ public class TakeAttendanceActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     AttendanceAdapter2 adapter;
-//    AttendanceAdapter adapter;
+    //    AttendanceAdapter adapter;
     ActionBar actionBar;
 
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
@@ -112,39 +109,50 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 //        });
 
 
-//        saveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                List<CourseStudent> selectedStudents = adapter.getSelectedStudentList();
-//
-//                String cycle = cycleEditText.getText().toString();
-//
-//                String day = daySpinner.getSelectedItem().toString();
-//
-//
-//                for (CourseStudent student : selectedStudents) {
-//                    Attendance attendance = new Attendance();
-//
-//
-//                    attendance.setCourseStudent(student);
-//                    attendance.setTimestamp(System.currentTimeMillis());
-//                    attendance.setDay(day);
-//                    attendance.setCycle(cycle);
-//
-//                    attendance.save();
-//
-//
-//                    // Update course info and student attendance percentage
-////                    course.setTotalClassTaken(course.getTotalClassTaken() + 1);
-//
-////                    student.
-//
-//                }
-//
-//                finish();
-//            }
-//        });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<CourseStudent> selectedStudents = adapter.getSelectedStudents();
+
+                String cycle = cycleEditText.getText().toString();
+
+                String day = daySpinner.getSelectedItem().toString();
+
+                CourseClass courseClass = new CourseClass();
+                courseClass.setCycle(cycle);
+                courseClass.setDay(day);
+                courseClass.setTimestamp(System.currentTimeMillis());
+                courseClass.save();
+                course.setTotalClassTaken(course.getTotalClassTaken() + 1);
+                course.save();
+
+                for (CourseStudent student : selectedStudents) {
+                    Attendance attendance = new Attendance();
+
+                    attendance.setCourseStudent(student);
+                    attendance.setCourseClass(courseClass);
+                    attendance.save();
+
+                    // Update course info and student attendance percentage
+                }
+
+                //Updating student attendance data
+
+                for (CourseStudent student : SugarRecord.listAll(CourseStudent.class)) {
+                    long totalClassAttended = student.getTotalClassAttended();
+                    int totalClass = student.getCourse().getTotalClassTaken();
+                    double attendancePercentage = (totalClassAttended * 100.0) / totalClass;
+                    int attendanceMark = student.percentageToMark(attendancePercentage);
+
+                    student.setAttendancePercentage(attendancePercentage);
+                    student.setAttendanceMark(attendanceMark);
+                    student.save();
+                }
+
+                finish();
+            }
+        });
 
 
         GridLayoutManager layoutManager =

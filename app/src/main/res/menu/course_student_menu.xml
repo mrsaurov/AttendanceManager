@@ -2,10 +2,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_search"
+    <item
+        android:id="@+id/action_search"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_sort_black_24dp"
+        android:title="Sort By"
+        app:showAsAction="ifRoom">
+        <menu>
+            <group android:checkableBehavior="none">
+                <item
+                    android:id="@+id/menu_item_featured_latest"
+                    android:icon="@drawable/ic_sort_black_24dp"
+                    android:title="Attendance Descending" />
+                <item
+                    android:id="@+id/menu_item_featured_oldest"
+                    android:icon="@drawable/ic_sort_black_24dp"
+                    android:title="Attenance Ascending" />
+                <item
+                    android:id="@+id/menu_item_featured_popular"
+                    android:icon="@drawable/ic_sort_black_24dp"
+                    android:title="Roll" />
+
+            </group>
+        </menu>
+    </item>
+
 
 </menu>

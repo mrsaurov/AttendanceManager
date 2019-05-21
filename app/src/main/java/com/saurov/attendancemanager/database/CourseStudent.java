@@ -3,15 +3,13 @@ package com.saurov.attendancemanager.database;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.util.Random;
-
 public class CourseStudent extends SugarRecord<CourseStudent> {
 
 
     // Each CourseStudent Belongs to A Course
     private Course course;
     private int roll;
-    private int attendancePercentage;
+    private double attendancePercentage;
     private int attendanceMark;
 
     @Ignore
@@ -33,7 +31,7 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
 
     }
 
-    public int percentageToMark(int attendancePercentage) {
+    public int percentageToMark(double attendancePercentage) {
 
         int obtainedMark;
 
@@ -70,11 +68,11 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
         this.roll = roll;
     }
 
-    public int getAttendancePercentage() {
+    public double getAttendancePercentage() {
         return attendancePercentage;
     }
 
-    public void setAttendancePercentage(int attendancePercentage) {
+    public void setAttendancePercentage(double attendancePercentage) {
         this.attendancePercentage = attendancePercentage;
     }
 
@@ -84,5 +82,11 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
 
     public void setAttendanceMark(int attendanceMark) {
         this.attendanceMark = attendanceMark;
+    }
+
+    public long getTotalClassAttended() {
+
+        return SugarRecord.count(Attendance.class,
+                "course_student = ?", new String[]{String.valueOf(this.getId())});
     }
 }
