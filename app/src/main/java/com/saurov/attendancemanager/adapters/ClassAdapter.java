@@ -1,6 +1,7 @@
 package com.saurov.attendancemanager.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.saurov.attendancemanager.R;
+import com.saurov.attendancemanager.activities.AddEditAttendanceActivity;
 import com.saurov.attendancemanager.database.CourseClass;
+import com.saurov.attendancemanager.fragments.ClassFragment;
 
 import java.util.List;
 
@@ -22,8 +25,17 @@ import butterknife.ButterKnife;
 
 public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder> {
 
+    public interface onItemClickListener {
+        void onClick(CourseClass courseClass, int position);
+    }
+
     private Context context;
     private List<CourseClass> courseClassList;
+    private onItemClickListener listener;
+
+    public void setOnItemClickListener(onItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public ClassAdapter(Context context, List<CourseClass> courseClassList) {
         this.context = context;
@@ -57,6 +69,15 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
         holder.classTimeTextView.setText(courseClass.getHumanReadableDate());
         holder.classSummaryTextView.setText("Student Present: " + courseClass.getTotalStudentPresent());
 
+        if (listener != null) {
+            holder.classMenuImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(courseClass, position);
+                }
+            });
+        }
+
     }
 
     @Override
@@ -69,11 +90,15 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
         @BindView(R.id.class_name_image_view)
         ImageView courseNameImageView;
 
+        @BindView(R.id.class_menu_image_view)
+        ImageView classMenuImageView;
+
         @BindView(R.id.class_time)
         TextView classTimeTextView;
 
         @BindView(R.id.class_summary)
         TextView classSummaryTextView;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

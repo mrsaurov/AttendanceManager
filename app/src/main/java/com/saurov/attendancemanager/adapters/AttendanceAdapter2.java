@@ -1,6 +1,7 @@
 package com.saurov.attendancemanager.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,6 @@ public class AttendanceAdapter2 extends RecyclerView.Adapter<AttendanceAdapter2.
     private List<CourseStudent> studentList;
     private onAttendanceCheckboxClickedListener listener;
     private boolean isSelectedAll = false;
-//    private boolean isSelectedAll = false;
 
     public void selectAllStudents() {
 
@@ -64,7 +64,26 @@ public class AttendanceAdapter2 extends RecyclerView.Adapter<AttendanceAdapter2.
     public AttendanceAdapter2(Context context, List<CourseStudent> studentList) {
         this.context = context;
         this.studentList = studentList;
-//        this.selectedStudentList = new ArrayList<>();
+    }
+
+    public AttendanceAdapter2(Context context, List<CourseStudent> studentList, List<CourseStudent> selectedStudents) {
+        this.context = context;
+        this.studentList = studentList;
+        this.selectedStudents = selectedStudents;
+
+        for (int position = 0; position < studentList.size(); position++) {
+
+            CourseStudent student = studentList.get(position);
+
+            if (selectedStudents.contains(student)) {
+                array.put(position, true);
+                Log.d("XX", "AttendanceAdapter2:yes " +student.getRoll());
+            } else {
+                array.put(position, false);
+                Log.d("XX", "AttendanceAdapter2:no " +student.getRoll());
+            }
+        }
+
     }
 
     public void setOnAttendanceCheckboxClickedListener(onAttendanceCheckboxClickedListener listener) {
@@ -82,6 +101,7 @@ public class AttendanceAdapter2 extends RecyclerView.Adapter<AttendanceAdapter2.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
         holder.bind(position);
     }
 
@@ -103,6 +123,7 @@ public class AttendanceAdapter2 extends RecyclerView.Adapter<AttendanceAdapter2.
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
 
             attendanceCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,7 +175,6 @@ public class AttendanceAdapter2 extends RecyclerView.Adapter<AttendanceAdapter2.
             }
 
         }
-
     }
 }
 

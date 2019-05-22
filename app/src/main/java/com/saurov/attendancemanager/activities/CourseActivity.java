@@ -3,6 +3,7 @@ package com.saurov.attendancemanager.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.LayoutInflaterCompat;
@@ -106,10 +107,14 @@ public class CourseActivity extends AppCompatActivity {
                                 break;
                             case CourseBottomSheetDialogFragment.ITEM_TAKE_ATTENDANCE:
 
-                                intent = new Intent(CourseActivity.this, TakeAttendanceActivity.class);
-                                intent.putExtra(TakeAttendanceActivity.TAG_COURSE_ID, course.getId());
+                                intent = new Intent(CourseActivity.this, AddEditAttendanceActivity.class);
+                                intent.putExtra(AddEditAttendanceActivity.TAG_COURSE_ID, course.getId());
                                 startActivity(intent);
                                 break;
+                            case CourseBottomSheetDialogFragment.ITEM_EXPORT_PDF:
+
+                                Toast.makeText(CourseActivity.this, "PDF", Toast.LENGTH_SHORT).show();
+                                
                         }
                     }
                 });

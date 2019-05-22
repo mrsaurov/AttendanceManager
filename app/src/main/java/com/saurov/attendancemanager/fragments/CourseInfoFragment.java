@@ -16,7 +16,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.android.material.button.MaterialButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
-import com.saurov.attendancemanager.activities.TakeAttendanceActivity;
+import com.saurov.attendancemanager.activities.AddEditAttendanceActivity;
 import com.saurov.attendancemanager.database.Course;
 
 import butterknife.BindView;
@@ -105,8 +105,8 @@ public class CourseInfoFragment extends Fragment {
         takeAttendanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), TakeAttendanceActivity.class);
-                i.putExtra(TakeAttendanceActivity.TAG_COURSE_ID, courseId);
+                Intent i = new Intent(getContext(), AddEditAttendanceActivity.class);
+                i.putExtra(AddEditAttendanceActivity.TAG_COURSE_ID, courseId);
                 startActivity(i);
             }
         });

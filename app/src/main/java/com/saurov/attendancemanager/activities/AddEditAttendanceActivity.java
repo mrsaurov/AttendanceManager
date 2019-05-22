@@ -27,9 +27,10 @@ import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.AttendanceAdapter2;
 import com.saurov.attendancemanager.database.Attendance;
-import com.saurov.attendancemanager.database.CourseClass;
 import com.saurov.attendancemanager.database.Course;
+import com.saurov.attendancemanager.database.CourseClass;
 import com.saurov.attendancemanager.database.CourseStudent;
+import com.saurov.attendancemanager.fragments.ClassFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TakeAttendanceActivity extends AppCompatActivity {
+public class AddEditAttendanceActivity extends AppCompatActivity {
 
 
     @BindView(R.id.attendance_recycler_view)
@@ -60,7 +61,10 @@ public class TakeAttendanceActivity extends AppCompatActivity {
     //    AttendanceAdapter adapter;
     ActionBar actionBar;
 
+    CourseClass courseClass;
+
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
+    public static final String TAG_CLASS_ID = "TAG_CLASS_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,31 +87,41 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 
         List<CourseStudent> courseStudents = course.getStudents();
 
-        adapter = new AttendanceAdapter2(this, courseStudents);
+        String editFlag = getIntent().getStringExtra(ClassFragment.EDIT_CLASS_ATTENDANCE_FLAG);
 
-//        adapter.setOnAttendanceCheckboxClickedListener(new AttendanceAdapter.onAttendanceCheckboxClickedListener() {
-//            @Override
-//            public void onClick(CourseStudent student, boolean isChecked, List<CourseStudent> selectedStudents, CustomCheckBox checkbox, int position) {
-//
-//                if (isChecked) {
-//                    selectedStudents.add(student);
-//                } else {
-//                    selectedStudents.remove(student);
-//                }
-//
-//                StringBuilder stringBuilder = new StringBuilder();
-//
-//                for (CourseStudent i : selectedStudents) {
-//                    stringBuilder.append(i.getRoll()).append(", ");
-//                }
-//
-//                Toast.makeText(TakeAttendanceActivity.this, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
-//
-//
-//            }
-//
-//        });
+        if (editFlag != null) {
+            //Edit Request
 
+            long classId = getIntent().getLongExtra(TAG_CLASS_ID, 0);
+
+            courseClass = SugarRecord.findById(CourseClass.class, classId);
+
+            cycleEditText.setText(courseClass.getCycle());
+
+            switch (courseClass.getDay()) {
+                case "A":
+                    daySpinner.setSelection(1);
+                    break;
+                case "B":
+                    daySpinner.setSelection(2);
+                    break;
+                case "C":
+                    daySpinner.setSelection(3);
+                    break;
+                case "D":
+                    daySpinner.setSelection(4);
+                    break;
+                case "E":
+                    daySpinner.setSelection(5);
+                    break;
+            }
+
+            adapter = new AttendanceAdapter2(this, courseStudents, courseClass.getAttendedStudents());
+
+        } else {
+            courseClass = new CourseClass();
+            adapter = new AttendanceAdapter2(this, courseStudents);
+        }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,13 +133,22 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 
                 String day = daySpinner.getSelectedItem().toString();
 
-                CourseClass courseClass = new CourseClass();
                 courseClass.setCycle(cycle);
                 courseClass.setDay(day);
-                courseClass.setTimestamp(System.currentTimeMillis());
+
+                if (editFlag == null) {
+                    //New Attendance
+                    courseClass.setTimestamp(System.currentTimeMillis());
+                    course.setTotalClassTaken(course.getTotalClassTaken() + 1);
+                    course.save();
+                } else {
+                    //Edit
+
+                    //Deleting all old attendance because of new entry for attendances
+                    courseClass.deleteAllAttendance();
+                }
+
                 courseClass.save();
-                course.setTotalClassTaken(course.getTotalClassTaken() + 1);
-                course.save();
 
                 for (CourseStudent student : selectedStudents) {
                     Attendance attendance = new Attendance();

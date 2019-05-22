@@ -62,6 +62,33 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/exportPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/bottom_sheet_item_margin"
+        android:paddingTop="@dimen/bottom_sheet_items_padding_top"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="32dp"
+            app:ico_color="@color/bottom_sheet_icon_color"
+            app:ico_icon="gmd-picture-as-pdf" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Export As PDF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/editItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

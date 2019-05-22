@@ -3,6 +3,7 @@ package com.saurov.attendancemanager.database;
 import com.orm.SugarRecord;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Course extends SugarRecord<Course> {
 
@@ -86,5 +87,27 @@ public class Course extends SugarRecord<Course> {
 
     public void setTotalClassTaken(int totalClassTaken) {
         this.totalClassTaken = totalClassTaken;
+    }
+
+    public long getTotalStudents(){
+        return SugarRecord.count(CourseStudent.class, "course = ?", new String[]{String.valueOf(this.getId())});
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return totalClassTaken == course.totalClassTaken &&
+                Objects.equals(number, course.number) &&
+                Objects.equals(title, course.title) &&
+                Objects.equals(series, course.series) &&
+                Objects.equals(department, course.department) &&
+                Objects.equals(section, course.section);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, title, series, department, section, totalClassTaken);
     }
 }

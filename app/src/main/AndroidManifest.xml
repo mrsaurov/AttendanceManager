@@ -16,7 +16,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
         <activity
-            android:name=".activities.TakeAttendanceActivity"
+            android:name=".activities.AddEditAttendanceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.AddStudentActivity" />
         <activity

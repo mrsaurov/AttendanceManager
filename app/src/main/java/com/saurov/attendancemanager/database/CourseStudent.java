@@ -3,6 +3,8 @@ package com.saurov.attendancemanager.database;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
+import java.util.Objects;
+
 public class CourseStudent extends SugarRecord<CourseStudent> {
 
 
@@ -12,20 +14,8 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
     private double attendancePercentage;
     private int attendanceMark;
 
-    @Ignore
-    private boolean isSelected;
-
-    public boolean getSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
     public CourseStudent() {
 
-        isSelected = false;
         attendancePercentage = 0;
         attendanceMark = 0;
 
@@ -88,5 +78,21 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
 
         return SugarRecord.count(Attendance.class,
                 "course_student = ?", new String[]{String.valueOf(this.getId())});
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CourseStudent student = (CourseStudent) o;
+        return roll == student.roll &&
+                Double.compare(student.attendancePercentage, attendancePercentage) == 0 &&
+                attendanceMark == student.attendanceMark &&
+                Objects.equals(course, student.course);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(course, roll, attendancePercentage, attendanceMark);
     }
 }

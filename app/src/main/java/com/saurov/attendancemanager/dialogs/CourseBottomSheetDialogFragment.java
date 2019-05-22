@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.saurov.attendancemanager.R;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.saurov.attendancemanager.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,7 +27,7 @@ public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFra
     public static final String ITEM_DELETE = "CourseBottomSheetDialogFragment.DELETE";
     public static final String ITEM_OPEN = "CourseBottomSheetDialogFragment.OPEN";
     public static final String ITEM_TAKE_ATTENDANCE = "CourseBottomSheetDialogFragment.TAKE_ATTENDANCE";
-
+    public static final String ITEM_EXPORT_PDF = "CourseBottomSheetDialogFragment.EXPORT_PDF";
 
 
     public void setOnItemClickListener(BottomSheetListener listener) {
@@ -67,26 +67,22 @@ public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFra
 
     //Click on Take Attendance
     @OnClick(R.id.takeAttendanceItem)
-    public void takeAttendance(View view){
-        if (mListener!=null){
+    public void takeAttendance(View view) {
+        if (mListener != null) {
             mListener.onItemClicked(ITEM_TAKE_ATTENDANCE);
         }
 
         dismiss();
     }
 
+    @OnClick(R.id.exportPdf)
+    public void exportAsPdf(View view) {
+        if (mListener != null) {
+            mListener.onItemClicked(ITEM_EXPORT_PDF);
+        }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//
-//        try {
-//            mListener = (BottomSheetListener) context;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(context.toString()
-//                    + " must implement BottomSheetListener");
-//        }
-//    }
+        dismiss();
+    }
 
     @Nullable
     @Override

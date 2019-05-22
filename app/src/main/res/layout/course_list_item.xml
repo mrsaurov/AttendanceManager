@@ -36,7 +36,7 @@
             android:layout_marginEnd="8dp"
             android:maxLines="1"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/course_menu_image_view"
+            app:layout_constraintEnd_toStartOf="@+id/class_menu_image_view"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/class_name_image_view"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,13 +49,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             tools:text="CSE 15"
-            app:layout_constraintEnd_toStartOf="@+id/course_menu_image_view"
+            app:layout_constraintEnd_toStartOf="@+id/class_menu_image_view"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/class_time"
             app:layout_constraintTop_toBottomOf="@+id/class_time" />
 
         <ImageView
-            android:id="@+id/course_menu_image_view"
+            android:id="@+id/class_menu_image_view"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"

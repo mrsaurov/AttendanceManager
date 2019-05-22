@@ -1,24 +1,23 @@
 package com.saurov.attendancemanager.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
+import com.saurov.attendancemanager.activities.AddEditAttendanceActivity;
 import com.saurov.attendancemanager.adapters.ClassAdapter;
 import com.saurov.attendancemanager.database.Course;
-import com.saurov.attendancemanager.database.CourseStudent;
-
-import java.util.List;
+import com.saurov.attendancemanager.database.CourseClass;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +28,7 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class ClassFragment extends Fragment {
+    public static final String EDIT_CLASS_ATTENDANCE_FLAG = "FLAG_EDIT_CLASS_ATTENDANCE";
     private static final String ARG_COURSE_ID = "param1";
 
     private long courseId;
@@ -75,6 +75,16 @@ public class ClassFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         adapter = new ClassAdapter(getContext(), course.getAllClasses());
+        adapter.setOnItemClickListener(new ClassAdapter.onItemClickListener() {
+            @Override
+            public void onClick(CourseClass courseClass, int position) {
+                Intent intent = new Intent(getContext(), AddEditAttendanceActivity.class);
+                intent.putExtra(EDIT_CLASS_ATTENDANCE_FLAG, "EDIT");
+                intent.putExtra(AddEditAttendanceActivity.TAG_COURSE_ID, courseId);
+                intent.putExtra(AddEditAttendanceActivity.TAG_CLASS_ID, courseClass.getId());
+                startActivity(intent);
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         classRecyclerView.setLayoutManager(layoutManager);
