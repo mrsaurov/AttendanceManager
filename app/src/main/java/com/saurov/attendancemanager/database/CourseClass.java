@@ -3,7 +3,6 @@ package com.saurov.attendancemanager.database;
 import com.orm.SugarRecord;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;

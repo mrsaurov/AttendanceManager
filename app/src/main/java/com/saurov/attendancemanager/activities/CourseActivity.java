@@ -18,6 +18,7 @@ import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.dialogs.CourseBottomSheetDialogFragment;
+import com.saurov.attendancemanager.util.PdfUtils;
 
 import java.util.List;
 
@@ -112,14 +113,12 @@ public class CourseActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case CourseBottomSheetDialogFragment.ITEM_EXPORT_PDF:
+                                PdfUtils.createAttendanceReport(CourseActivity.this, course);
+                                break;
 
-                                Toast.makeText(CourseActivity.this, "PDF", Toast.LENGTH_SHORT).show();
-                                
                         }
                     }
                 });
-
-
             }
         });
 
