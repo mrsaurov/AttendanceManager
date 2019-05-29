@@ -63,6 +63,7 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
 
     CourseClass courseClass;
 
+    public static final String EDIT_CLASS_ATTENDANCE_FLAG = "FLAG_EDIT_CLASS_ATTENDANCE";
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
     public static final String TAG_CLASS_ID = "TAG_CLASS_ID";
 
@@ -87,7 +88,7 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
 
         List<CourseStudent> courseStudents = course.getStudents();
 
-        String editFlag = getIntent().getStringExtra(ClassFragment.EDIT_CLASS_ATTENDANCE_FLAG);
+        String editFlag = getIntent().getStringExtra(EDIT_CLASS_ATTENDANCE_FLAG);
 
         if (editFlag != null) {
             //Edit Request

@@ -3,7 +3,6 @@ package com.saurov.attendancemanager.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.LayoutInflaterCompat;
@@ -90,9 +89,10 @@ public class CourseActivity extends AppCompatActivity {
                                 break;
 
                             case CourseBottomSheetDialogFragment.ITEM_DELETE:
-                                course.delete();
+//                                course.delete();
+                                course.deleteCascade();
 
-                                refreshCourseRecylerView();
+                                refreshCourseRecyclerView();
                                 break;
 
                             case CourseBottomSheetDialogFragment.ITEM_EDIT:
@@ -129,7 +129,7 @@ public class CourseActivity extends AppCompatActivity {
         courseRecyclerView.setAdapter(adapter);
     }
 
-    private void refreshCourseRecylerView() {
+    private void refreshCourseRecyclerView() {
         adapter.refreshData(SugarRecord.listAll(Course.class));
         adapter.notifyDataSetChanged();
     }
@@ -137,8 +137,7 @@ public class CourseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        refreshCourseRecylerView();
+        refreshCourseRecyclerView();
 
     }
 

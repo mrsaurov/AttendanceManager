@@ -11,6 +11,10 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
     // Each CourseStudent Belongs to A Course
     private Course course;
     private int roll;
+    // TODO: 2019-05-30 Make sure percentage and
+    //  mark is always up to date even when course class is deleted.
+    //  This issue is caused because these values are set when taking attendance
+    //  and never retrieved using sql query as a result deleting class wont reflect on percentage and mark
     private double attendancePercentage;
     private int attendanceMark;
 

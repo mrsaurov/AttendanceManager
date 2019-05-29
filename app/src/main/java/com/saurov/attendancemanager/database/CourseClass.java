@@ -13,6 +13,8 @@ public class CourseClass extends SugarRecord<CourseClass> {
     private String cycle;
     private long timestamp;
 
+    // TODO: 2019-05-30 Add class period/weight for multiple period of classes
+
     public CourseClass() {
 
     }

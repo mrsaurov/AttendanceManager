@@ -1,4 +1,4 @@
-package com.saurov.attendancemanager.dialogs;
+package com.saurov.attendancemanager.views;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -18,6 +18,4 @@ public class RoundedBottomSheetDialogFragment extends BottomSheetDialogFragment 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return (Dialog)(new BottomSheetDialog(this.requireContext(), this.getTheme()));
     }
-
-
 }

@@ -12,6 +12,7 @@ public class Course extends SugarRecord<Course> {
     private String series;
     private String department;
     private String section;
+    // TODO: 2019-05-30 acquire total class taken using raw query 
     private int totalClassTaken;
 
     public Course() {
@@ -89,8 +90,40 @@ public class Course extends SugarRecord<Course> {
         this.totalClassTaken = totalClassTaken;
     }
 
-    public long getTotalStudents(){
+    public long getTotalStudents() {
         return SugarRecord.count(CourseStudent.class, "course = ?", new String[]{String.valueOf(this.getId())});
+    }
+
+    public CourseClass getLastClassTaken() {
+        return SugarRecord.findWithQuery(CourseClass.class,
+                "select distinct course_class.id, day, cycle, timestamp " +
+                        "from course_class,attendance,course_student " +
+                        "where attendance.course_class = course_class.id and " +
+                        "course_student.id = attendance.course_student and course_student.course = ? " +
+                        "order by timestamp desc " +
+                        "limit 1",
+                String.valueOf(this.getId())).get(0);
+    }
+
+    // TODO: 2019-05-30 Insure that course class delete reflects total class taken change
+    public void deleteCascade() {
+
+        //Delete all course class
+        SugarRecord.executeQuery("delete from course_class where " +
+                        "course_class.id in " +
+                        "(select distinct course_class from attendance,course_student where course_student.id  = attendance.course_student and course_student.course = ?)"
+                , String.valueOf(this.getId()));
+
+        //Delete all attendance data
+        SugarRecord.executeQuery("delete from attendance where " +
+                "course_student in " +
+                "(select id from course_student where course = ?)", String.valueOf(this.getId()));
+
+        //Delete All Students
+        SugarRecord.deleteAll(CourseStudent.class, "course = ?", String.valueOf(this.getId()));
+
+        //Delete this course
+        this.delete();
     }
 
     @Override

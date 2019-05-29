@@ -1,7 +1,6 @@
 package com.saurov.attendancemanager.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.saurov.attendancemanager.R;
-import com.saurov.attendancemanager.activities.AddEditAttendanceActivity;
 import com.saurov.attendancemanager.database.CourseClass;
-import com.saurov.attendancemanager.fragments.ClassFragment;
 
 import java.util.List;
 
@@ -27,6 +24,8 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
 
     public interface onItemClickListener {
         void onClick(CourseClass courseClass, int position);
+
+        void onMenuClick(CourseClass courseClass, int position);
     }
 
     private Context context;
@@ -73,11 +72,22 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
             holder.classMenuImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    listener.onMenuClick(courseClass, position);
+                }
+            });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     listener.onClick(courseClass, position);
                 }
             });
         }
 
+    }
+
+    public void refreshData(List<CourseClass> data) {
+        this.courseClassList = data;
     }
 
     @Override
@@ -96,7 +106,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
         @BindView(R.id.class_time)
         TextView classTimeTextView;
 
-        @BindView(R.id.class_summary)
+        @BindView(R.id.class_date_text_view)
         TextView classSummaryTextView;
 
 

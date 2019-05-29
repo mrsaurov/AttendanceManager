@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
+        <activity android:name=".activities.ClassDetailActivity"></activity>
         <activity
             android:name=".activities.AddEditAttendanceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -62,9 +63,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
 
 </manifest>

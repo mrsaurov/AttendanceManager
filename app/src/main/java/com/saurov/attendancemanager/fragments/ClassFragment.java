@@ -15,9 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.activities.AddEditAttendanceActivity;
+import com.saurov.attendancemanager.activities.AddEditCourseActivity;
+import com.saurov.attendancemanager.activities.ClassDetailActivity;
+import com.saurov.attendancemanager.activities.CourseActivity;
+import com.saurov.attendancemanager.activities.CourseDetailActivity;
 import com.saurov.attendancemanager.adapters.ClassAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseClass;
+import com.saurov.attendancemanager.dialogs.ClassBottomSheetDialogFragment;
+import com.saurov.attendancemanager.dialogs.ClassBottomSheetDialogFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +34,6 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class ClassFragment extends Fragment {
-    public static final String EDIT_CLASS_ATTENDANCE_FLAG = "FLAG_EDIT_CLASS_ATTENDANCE";
     private static final String ARG_COURSE_ID = "param1";
 
     private long courseId;
@@ -78,11 +83,53 @@ public class ClassFragment extends Fragment {
         adapter.setOnItemClickListener(new ClassAdapter.onItemClickListener() {
             @Override
             public void onClick(CourseClass courseClass, int position) {
-                Intent intent = new Intent(getContext(), AddEditAttendanceActivity.class);
-                intent.putExtra(EDIT_CLASS_ATTENDANCE_FLAG, "EDIT");
-                intent.putExtra(AddEditAttendanceActivity.TAG_COURSE_ID, courseId);
-                intent.putExtra(AddEditAttendanceActivity.TAG_CLASS_ID, courseClass.getId());
+
+                Intent intent = new Intent(getContext(), ClassDetailActivity.class);
+                intent.putExtra(ClassDetailActivity.TAG_CLASS_ID, courseClass.getId());
+                intent.putExtra(ClassDetailActivity.TAG_COURSE_ID, course.getId());
                 startActivity(intent);
+            }
+
+            @Override
+            public void onMenuClick(CourseClass courseClass, int position) {
+
+                ClassBottomSheetDialogFragment bottomSheet = new ClassBottomSheetDialogFragment();
+                bottomSheet.show(getFragmentManager(), "example");
+
+                bottomSheet.setOnItemClickListener(new ClassBottomSheetDialogFragment.BottomSheetListener() {
+                    @Override
+                    public void onItemClicked(String selectionId) {
+
+                        Intent intent;
+
+                        switch (selectionId) {
+                            case ClassBottomSheetDialogFragment.ITEM_OPEN:
+                                intent = new Intent(getContext(), ClassDetailActivity.class);
+                                intent.putExtra(ClassDetailActivity.TAG_CLASS_ID, courseClass.getId());
+                                intent.putExtra(ClassDetailActivity.TAG_COURSE_ID, course.getId());
+                                startActivity(intent);
+
+                                break;
+
+                            case ClassBottomSheetDialogFragment.ITEM_DELETE:
+
+                                // TODO: 2019-05-30 Implement this using cascading delete
+
+                                break;
+
+                            case ClassBottomSheetDialogFragment.ITEM_EDIT:
+
+                                intent = new Intent(getContext(), AddEditAttendanceActivity.class);
+                                intent.putExtra(AddEditAttendanceActivity.EDIT_CLASS_ATTENDANCE_FLAG, "EDIT");
+                                intent.putExtra(AddEditAttendanceActivity.TAG_COURSE_ID, courseId);
+                                intent.putExtra(AddEditAttendanceActivity.TAG_CLASS_ID, courseClass.getId());
+                                startActivity(intent);
+                                break;
+                        }
+                    }
+                });
+
+
             }
         });
 
@@ -94,4 +141,14 @@ public class ClassFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshClassRecyclerView();
+    }
+
+    private void refreshClassRecyclerView() {
+        adapter.refreshData(course.getAllClasses());
+        adapter.notifyDataSetChanged();
+    }
 }

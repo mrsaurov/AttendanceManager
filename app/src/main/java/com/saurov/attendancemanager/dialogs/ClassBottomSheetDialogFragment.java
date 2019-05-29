@@ -14,7 +14,7 @@ import com.saurov.attendancemanager.views.RoundedBottomSheetDialogFragment;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFragment {
+public class ClassBottomSheetDialogFragment extends RoundedBottomSheetDialogFragment {
 
 
     public interface BottomSheetListener {
@@ -24,11 +24,9 @@ public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFra
     private BottomSheetListener mListener;
 
 
-    public static final String ITEM_EDIT = "CourseBottomSheetDialogFragment.EDIT";
-    public static final String ITEM_DELETE = "CourseBottomSheetDialogFragment.DELETE";
-    public static final String ITEM_OPEN = "CourseBottomSheetDialogFragment.OPEN";
-    public static final String ITEM_TAKE_ATTENDANCE = "CourseBottomSheetDialogFragment.TAKE_ATTENDANCE";
-    public static final String ITEM_EXPORT_PDF = "CourseBottomSheetDialogFragment.EXPORT_PDF";
+    public static final String ITEM_EDIT = "ClassBottomSheetDialogFragment.EDIT";
+    public static final String ITEM_DELETE = "ClassBottomSheetDialogFragment.DELETE";
+    public static final String ITEM_OPEN = "ClassBottomSheetDialogFragment.OPEN";
 
 
     public void setOnItemClickListener(BottomSheetListener listener) {
@@ -66,30 +64,12 @@ public class CourseBottomSheetDialogFragment extends RoundedBottomSheetDialogFra
         dismiss();
     }
 
-    //Click on Take Attendance
-    @OnClick(R.id.takeAttendanceItem)
-    public void takeAttendance(View view) {
-        if (mListener != null) {
-            mListener.onItemClicked(ITEM_TAKE_ATTENDANCE);
-        }
-
-        dismiss();
-    }
-
-    @OnClick(R.id.exportPdf)
-    public void exportAsPdf(View view) {
-        if (mListener != null) {
-            mListener.onItemClicked(ITEM_EXPORT_PDF);
-        }
-
-        dismiss();
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.course_bottom_sheet_layout, container, false);
+        View view = inflater.inflate(R.layout.class_bottom_sheet_layout, container, false);
 
         ButterKnife.bind(this, view);
 

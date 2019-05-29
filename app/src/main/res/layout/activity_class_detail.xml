@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -50,7 +49,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Name"
+                    android:text="Student Present"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
@@ -58,7 +57,7 @@
                     android:id="@+id/student_present_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:textColor="@android:color/black"
                     tools:text="May 25, 1995" />
 
@@ -67,6 +66,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/student_present_chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/divider_drawable"
                 android:orientation="horizontal"
                 android:padding="5dp">
@@ -75,7 +89,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Course No."
+                    android:text="Student Absent"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
@@ -83,7 +97,7 @@
                     android:id="@+id/student_absent_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:textColor="@android:color/black"
                     tools:text="25 year" />
 
@@ -92,88 +106,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/divider_drawable"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Total Students"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/total_student_text_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textColor="@android:color/black"
-                    tools:text="25 year" />
+                <com.google.android.material.chip.ChipGroup
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/student_absent_chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/divider_drawable"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Last Class Taken On"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/last_class_taken_text_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textColor="@android:color/black"
-                    tools:text="25 year" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/divider_drawable"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Total Classes Taken"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/total_class_taken_text_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textColor="@android:color/black"
-                    tools:text="25 year" />
-
-            </LinearLayout>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/take_attendance_button"
-                app:icon="@drawable/ic_add_white_24dp"
-                android:layout_margin="20dp"
-                app:cornerRadius="20dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Take Attendance" />
 
 
         </LinearLayout>

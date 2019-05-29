@@ -35,20 +35,23 @@ public class CourseInfoFragment extends Fragment {
     @BindView(R.id.class_name_image_view)
     ImageView courseSeriesImageView;
 
-    @BindView(R.id.class_summary)
+    @BindView(R.id.class_date_text_view)
     TextView courseClass;
 
-    @BindView(R.id.course_name_text_view)
+    @BindView(R.id.student_present_text_view)
     TextView courseNameTextView;
 
-    @BindView(R.id.course_no_text_view)
+    @BindView(R.id.student_absent_text_view)
     TextView courseNoTextView;
 
-    @BindView(R.id.last_class_text_view)
+    @BindView(R.id.last_class_taken_text_view)
     TextView lastClassTextView;
 
     @BindView(R.id.total_class_taken_text_view)
     TextView totalClassTakenTextView;
+
+    @BindView(R.id.total_student_text_view)
+    TextView totalStudentTextView;
 
     @BindView(R.id.take_attendance_button)
     MaterialButton takeAttendanceButton;
@@ -92,15 +95,8 @@ public class CourseInfoFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-
-//        for (Attendance a : course.getAllClasses()) {
-//            Log.d("Attendance", a.getCycle() + " " + a.getDay());
-//        }
-
         courseNameTextView.setText(course.getTitle());
         courseNoTextView.setText(course.getNumber());
-
-//        course.getAllClasses();
 
         takeAttendanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +119,13 @@ public class CourseInfoFragment extends Fragment {
         courseClass.setText(course.getDepartment() + " " + course.getSeries() + " " + course.getSection());
 
         totalClassTakenTextView.setText(String.valueOf(course.getTotalClassTaken()));
+        if (course.getAllClasses().size() != 0) {
+            lastClassTextView.setText(course.getLastClassTaken().getHumanReadableDate());
+        }else {
+            lastClassTextView.setText("N/A");
+        }
+
+        totalStudentTextView.setText(String.valueOf(course.getTotalStudents()));
 
         return view;
     }
