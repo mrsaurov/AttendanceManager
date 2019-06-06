@@ -17,17 +17,17 @@
         <menu>
             <group android:checkableBehavior="none">
                 <item
-                    android:id="@+id/menu_item_featured_latest"
-                    android:icon="@drawable/ic_sort_black_24dp"
+                    android:id="@+id/menu_item_attendance_desc"
+                    android:icon="@drawable/ic_arrow_downward_black_24dp"
                     android:title="Attendance Descending" />
                 <item
-                    android:id="@+id/menu_item_featured_oldest"
-                    android:icon="@drawable/ic_sort_black_24dp"
+                    android:id="@+id/menu_item_attendance_asc"
+                    android:icon="@drawable/ic_arrow_upward_black_24dp"
                     android:title="Attenance Ascending" />
                 <item
-                    android:id="@+id/menu_item_featured_popular"
-                    android:icon="@drawable/ic_sort_black_24dp"
-                    android:title="Roll" />
+                    android:id="@+id/menu_item_roll"
+                    android:icon="@drawable/ic_format_list_numbered_black_24dp"
+                    android:title="Roll Ascending" />
 
             </group>
         </menu>

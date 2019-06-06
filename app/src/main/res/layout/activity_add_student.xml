@@ -65,7 +65,7 @@
             android:hint="Excluding (Comma Seperated)">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/excluded_rolls"
+                android:id="@+id/series_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"

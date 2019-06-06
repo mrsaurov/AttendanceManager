@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class AddStudentActivity extends AppCompatActivity {
@@ -32,7 +34,7 @@ public class AddStudentActivity extends AppCompatActivity {
     @BindView(R.id.enrollment_readmitted_rolls)
     TextInputEditText readmittedRollsEditText;
 
-    @BindView(R.id.excluded_rolls)
+    @BindView(R.id.series_edit_text)
     TextInputEditText excludedRollsEditText;
 
     @BindView(R.id.save_button)
@@ -42,6 +44,7 @@ public class AddStudentActivity extends AppCompatActivity {
     MaterialButton cancelButton;
 
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
+    SparseBooleanArray isStudentInDb = new SparseBooleanArray();
 
 
     @Override
@@ -53,6 +56,13 @@ public class AddStudentActivity extends AppCompatActivity {
 
         long courseId = getIntent().getLongExtra(TAG_COURSE_ID, 0);
 
+        Course course = SugarRecord.findById(Course.class,courseId);
+
+        List<CourseStudent> courseStudents = course.getStudents();
+
+        for (CourseStudent student:courseStudents){
+            isStudentInDb.put(student.getRoll(), true);
+        }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +100,8 @@ public class AddStudentActivity extends AppCompatActivity {
 
                     for (int i = firstRoll; i <= lastRoll; i++) {
 
-                        // Excluded then dont add
-                        if (excludedSet.contains(i)){
+                        // Excluded then don't add
+                        if (excludedSet.contains(i) || isStudentInDb.get(i)){
                             continue;
                         }
 
@@ -106,6 +116,10 @@ public class AddStudentActivity extends AppCompatActivity {
                     //Adding readmitted students
 
                     for (int i : readmittedSet){
+
+                        if (excludedSet.contains(i) || isStudentInDb.get(i)){
+                            continue;
+                        }
 
                         CourseStudent student = new CourseStudent();
 

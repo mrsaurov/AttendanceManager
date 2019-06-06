@@ -22,6 +22,7 @@ import com.saurov.attendancemanager.activities.CourseDetailActivity;
 import com.saurov.attendancemanager.adapters.ClassAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseClass;
+import com.saurov.attendancemanager.database.CourseStudent;
 import com.saurov.attendancemanager.dialogs.ClassBottomSheetDialogFragment;
 import com.saurov.attendancemanager.dialogs.ClassBottomSheetDialogFragment;
 
@@ -39,6 +40,7 @@ public class ClassFragment extends Fragment {
     private long courseId;
     private Course course;
     private ClassAdapter adapter;
+
 
     @BindView(R.id.class_recycler_view)
     RecyclerView classRecyclerView;
@@ -112,9 +114,22 @@ public class ClassFragment extends Fragment {
                                 break;
 
                             case ClassBottomSheetDialogFragment.ITEM_DELETE:
+                                courseClass.deleteCascade();
+                                course.setTotalClassTaken(course.getTotalClassTaken() - 1);
+                                course.save();
 
-                                // TODO: 2019-05-30 Implement this using cascading delete
+                                for (CourseStudent student : SugarRecord.listAll(CourseStudent.class)) {
+                                    long totalClassAttended = student.getTotalClassAttended();
+                                    int totalClass = student.getCourse().getTotalClassTaken();
+                                    double attendancePercentage = (totalClassAttended * 100.0) / totalClass;
+                                    int attendanceMark = student.percentageToMark(attendancePercentage);
 
+                                    student.setAttendancePercentage(attendancePercentage);
+                                    student.setAttendanceMark(attendanceMark);
+                                    student.save();
+                                }
+
+                                refreshClassRecyclerView();
                                 break;
 
                             case ClassBottomSheetDialogFragment.ITEM_EDIT:

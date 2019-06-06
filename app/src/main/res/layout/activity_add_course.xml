@@ -17,6 +17,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/course_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
@@ -31,10 +32,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/course_no_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            android:hint="Course Number">
+            android:hint="Course Number"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/course_no_edit_text"
@@ -45,6 +48,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/departmant_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Department">
@@ -65,12 +69,13 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/series_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Series">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/excluded_rolls"
+                android:id="@+id/series_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />

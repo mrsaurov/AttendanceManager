@@ -75,8 +75,6 @@ public class PdfUtils {
 
     private static File getPdfFile(Activity activity, String directory, String pdfName) {
 
-        Utils.isStoragePermissionGranted(activity);
-
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() + directory;
 
         File dir = new File(path);

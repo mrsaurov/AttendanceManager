@@ -90,5 +90,6 @@ public class CourseDetailActivity extends AppCompatActivity {
         courseViewPager.setAdapter(mTabAdapter);
 
         courseTabLayout.setupWithViewPager(courseViewPager);
+
     }
 }

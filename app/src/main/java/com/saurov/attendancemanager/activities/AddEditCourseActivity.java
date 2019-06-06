@@ -3,6 +3,7 @@ package com.saurov.attendancemanager.activities;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.database.Course;
@@ -33,14 +35,26 @@ public class AddEditCourseActivity extends AppCompatActivity {
     @BindView(R.id.course_name_edit_text)
     TextInputEditText courseName;
 
+    @BindView(R.id.course_name_layout)
+    TextInputLayout courseNameLayout;
+
     @BindView(R.id.department_name_edit_text)
     TextInputEditText departmentName;
+
+    @BindView(R.id.departmant_name_layout)
+    TextInputLayout departmentNameLayout;
 
     @BindView(R.id.course_no_edit_text)
     TextInputEditText courseNo;
 
-    @BindView(R.id.excluded_rolls)
+    @BindView(R.id.course_no_layout)
+    TextInputLayout courseNoLayout;
+
+    @BindView(R.id.series_edit_text)
     TextInputEditText series;
+
+    @BindView(R.id.series_layout)
+    TextInputLayout seriesLayout;
 
     @BindView(R.id.section_spinner)
     Spinner sectionSpinner;
@@ -114,7 +128,6 @@ public class AddEditCourseActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 switch (sectionSpinner.getSelectedItemPosition()) {
-
                     case 1:
                         course.setSection("A");
                         break;
@@ -124,20 +137,20 @@ public class AddEditCourseActivity extends AppCompatActivity {
                     case 3:
                         course.setSection("C");
                         break;
+                }
+
+                if (isInputValid()) {
+                    course.setTitle(courseName.getText().toString());
+                    course.setDepartment(departmentName.getText().toString());
+                    course.setNumber(courseNo.getText().toString());
+                    course.setSeries(series.getText().toString());
+
+                    course.save();
+                    finish();
 
                 }
 
 
-                course.setTitle(courseName.getText().toString());
-                course.setDepartment(departmentName.getText().toString());
-                course.setNumber(courseNo.getText().toString());
-                course.setSeries(series.getText().toString());
-
-                course.save();
-//                if (onCourseSavedListener != null){
-//                    onCourseSavedListener.onCourseSaved();
-//                }
-                finish();
             }
         });
 
@@ -148,6 +161,47 @@ public class AddEditCourseActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private boolean isInputValid() {
+
+        boolean isValid = true;
+
+        if (sectionSpinner.getSelectedItemPosition() == 0) {
+            ((TextView) sectionSpinner.getSelectedView()).setError("Section is required");
+            isValid = false;
+        }
+
+        if (isTextEmpty(courseName.getText())) {
+            courseNameLayout.setError("Course name is required");
+            isValid = false;
+        } else {
+            courseNameLayout.setError(null);
+        }
+
+        if (isTextEmpty(courseNo.getText())) {
+            courseNoLayout.setError("Course number is required");
+            isValid = false;
+        } else {
+            courseNoLayout.setError(null);
+        }
+
+        if (isTextEmpty(departmentName.getText())) {
+            departmentNameLayout.setError("Department is required");
+            isValid = false;
+        } else {
+            departmentNameLayout.setError(null);
+        }
+
+        if (isTextEmpty(series.getText())) {
+            seriesLayout.setError("Series is required");
+            isValid = false;
+        } else {
+            seriesLayout.setError(null);
+        }
+
+        return isValid;
 
     }
 
@@ -255,6 +309,10 @@ public class AddEditCourseActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    private boolean isTextEmpty(@Nullable Editable text) {
+        return text != null && text.toString().trim().isEmpty();
     }
 
 //    public interface OnCourseSavedListener{

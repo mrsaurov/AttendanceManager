@@ -32,6 +32,7 @@ public class Course extends SugarRecord<Course> {
         return SugarRecord.find(CourseStudent.class, "course = ?", String.valueOf(this.getId()));
     }
 
+    // TODO: 2019-06-06 If no one is present then that class is not returned.. fix it
     public List<CourseClass> getAllClasses() {
 
         return SugarRecord.findWithQuery(CourseClass.class,

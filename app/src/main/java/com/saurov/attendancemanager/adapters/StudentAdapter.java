@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.saurov.attendancemanager.R;
+import com.saurov.attendancemanager.database.CourseClass;
 import com.saurov.attendancemanager.database.CourseStudent;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
@@ -34,6 +35,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     public interface OnItemClickListener {
         void onClick(CourseStudent student, int position);
     }
+
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;

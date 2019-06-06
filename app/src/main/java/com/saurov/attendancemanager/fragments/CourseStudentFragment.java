@@ -30,6 +30,9 @@ import com.saurov.attendancemanager.adapters.StudentAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -49,6 +52,7 @@ public class CourseStudentFragment extends Fragment {
     private Course course;
 
     StudentAdapter adapter;
+    private List<CourseStudent> courseStudentsList;
 
     public CourseStudentFragment() {
         // Required empty public constructor
@@ -81,7 +85,8 @@ public class CourseStudentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_student, container, false);
         ButterKnife.bind(this, view);
 
-        adapter = new StudentAdapter(getContext(), course.getStudents());
+        courseStudentsList = course.getStudents();
+        adapter = new StudentAdapter(getContext(), courseStudentsList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         studentRecyclerView.setLayoutManager(layoutManager);
@@ -96,15 +101,13 @@ public class CourseStudentFragment extends Fragment {
                 i.putExtra(AddStudentActivity.TAG_COURSE_ID, courseId);
 
                 startActivity(i);
-
-
             }
         });
 
         return view;
     }
 
-    private void refreshStudentRecylerView() {
+    private void refreshStudentRecyclerView() {
         adapter.refreshData(course.getStudents());
         adapter.notifyDataSetChanged();
     }
@@ -112,8 +115,15 @@ public class CourseStudentFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        refreshStudentRecyclerView();
+    }
 
-        refreshStudentRecylerView();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 
     @Override
@@ -142,5 +152,52 @@ public class CourseStudentFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_attendance_asc:
+                Collections.sort(courseStudentsList, new Comparator<CourseStudent>() {
+                    @Override
+                    public int compare(CourseStudent o1, CourseStudent o2) {
+                        return Double.compare(o1.getAttendancePercentage(), o2.getAttendancePercentage());
+                    }
+                });
+
+                break;
+
+            case R.id.menu_item_attendance_desc:
+                Collections.sort(courseStudentsList, new Comparator<CourseStudent>() {
+                    @Override
+                    public int compare(CourseStudent o1, CourseStudent o2) {
+                        if (o1.getAttendancePercentage() == o2.getAttendancePercentage()) {
+                            return 0;
+                        } else if (o1.getAttendancePercentage() > o2.getAttendancePercentage()) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                });
+
+                break;
+
+            case R.id.menu_item_roll:
+                Collections.sort(courseStudentsList, new Comparator<CourseStudent>() {
+                    @Override
+                    public int compare(CourseStudent o1, CourseStudent o2) {
+                        return Integer.compare(o1.getRoll(), o2.getRoll());
+                    }
+                });
+
+                break;
+
+        }
+
+        adapter.refreshData(courseStudentsList);
+        adapter.notifyDataSetChanged();
+        return super.onOptionsItemSelected(item);
     }
 }
