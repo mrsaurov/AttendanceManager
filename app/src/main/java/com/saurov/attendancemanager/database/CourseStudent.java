@@ -84,6 +84,16 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
                 "course_student = ?", new String[]{String.valueOf(this.getId())});
     }
 
+    public void deleteCascade() {
+
+        //Delete all attendance
+        SugarRecord.deleteAll(Attendance.class, "course_student = ?", String.valueOf(this.getId()));
+
+        //Delete this student
+        this.delete();
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

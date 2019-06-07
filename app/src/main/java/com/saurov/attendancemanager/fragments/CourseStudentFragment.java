@@ -3,7 +3,6 @@ package com.saurov.attendancemanager.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,9 +18,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
@@ -29,11 +25,14 @@ import com.saurov.attendancemanager.activities.AddStudentActivity;
 import com.saurov.attendancemanager.adapters.StudentAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
+import com.saurov.attendancemanager.dialogs.StudentBottomSheetDialogFragment;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,6 +86,33 @@ public class CourseStudentFragment extends Fragment {
 
         courseStudentsList = course.getStudents();
         adapter = new StudentAdapter(getContext(), courseStudentsList);
+        adapter.setOnItemClickListener(new StudentAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(CourseStudent student, int position) {
+
+            }
+
+            @Override
+            public void onMenuClick(CourseStudent student, int position) {
+
+                StudentBottomSheetDialogFragment bottomSheet = new StudentBottomSheetDialogFragment();
+                bottomSheet.show(getFragmentManager(), "student_bottom_sheet");
+                bottomSheet.setOnItemClickListener(new StudentBottomSheetDialogFragment.BottomSheetListener() {
+                    @Override
+                    public void onItemClicked(String selectionId) {
+                        switch (selectionId){
+                            case StudentBottomSheetDialogFragment.ITEM_DELETE:
+                                student.deleteCascade();
+                                refreshStudentRecyclerView();
+                                break;
+                            case StudentBottomSheetDialogFragment.ITEM_OPEN:
+                                break;
+                        }
+                    }
+                });
+
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         studentRecyclerView.setLayoutManager(layoutManager);

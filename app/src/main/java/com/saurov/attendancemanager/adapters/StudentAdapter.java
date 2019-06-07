@@ -14,13 +14,11 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.saurov.attendancemanager.R;
-import com.saurov.attendancemanager.database.CourseClass;
 import com.saurov.attendancemanager.database.CourseStudent;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +32,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
     public interface OnItemClickListener {
         void onClick(CourseStudent student, int position);
+
+        void onMenuClick(CourseStudent student, int position);
     }
 
 
@@ -95,6 +95,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
                 if (onItemClickListener != null) {
                     onItemClickListener.onClick(student, position);
                 }
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onMenuClick(student, position);
+                }
+                return true;
             }
         });
 

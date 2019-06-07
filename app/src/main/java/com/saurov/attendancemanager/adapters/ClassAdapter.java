@@ -68,21 +68,36 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
         holder.classTimeTextView.setText(courseClass.getHumanReadableDate());
         holder.classSummaryTextView.setText("Student Present: " + courseClass.getTotalStudentPresent());
 
-        if (listener != null) {
-            holder.classMenuImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        holder.classMenuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (listener != null) {
                     listener.onMenuClick(courseClass, position);
                 }
-            });
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
                     listener.onClick(courseClass, position);
                 }
-            });
-        }
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                if (listener != null) {
+                    listener.onMenuClick(courseClass, position);
+                }
+                return true;
+            }
+        });
 
     }
 
