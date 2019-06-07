@@ -50,7 +50,7 @@ public class CourseStudentFragment extends Fragment {
     private long courseId;
     private Course course;
 
-    StudentAdapter adapter;
+    private StudentAdapter adapter;
     private List<CourseStudent> courseStudentsList;
 
     public CourseStudentFragment() {

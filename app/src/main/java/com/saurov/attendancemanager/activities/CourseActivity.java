@@ -33,7 +33,7 @@ public class CourseActivity extends AppCompatActivity {
     @BindView(R.id.course_recycler_view)
     RecyclerView courseRecyclerView;
 
-    CourseAdapter adapter;
+    private CourseAdapter adapter;
 
     public static final String EDIT_COURSE_FLAG = "EDIT_COURSE_FLAG";
     public static final String COURSE_ID_TAG = "COURSE_ID_TAG";

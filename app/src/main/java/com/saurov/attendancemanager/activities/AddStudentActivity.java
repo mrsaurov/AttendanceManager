@@ -44,7 +44,7 @@ public class AddStudentActivity extends AppCompatActivity {
     MaterialButton cancelButton;
 
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
-    SparseBooleanArray isStudentInDb = new SparseBooleanArray();
+    private SparseBooleanArray isStudentInDb = new SparseBooleanArray();
 
 
     @Override

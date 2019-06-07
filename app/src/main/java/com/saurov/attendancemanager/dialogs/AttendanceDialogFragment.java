@@ -41,11 +41,15 @@ public class AttendanceDialogFragment extends DialogFragment {
     @BindView(R.id.day_spinner)
     Spinner daySpinner;
 
+    @BindView(R.id.period_spinner)
+    Spinner periodSpinner;
+
     private String mDay;
     private String mCycle;
+    private String mPeriod;
 
     public interface onAttendanceDataPassedListener {
-        void onDataPassed(String cycle, String day);
+        void onDataPassed(String cycle, String day, String period);
     }
 
     private onAttendanceDataPassedListener listener;
@@ -56,12 +60,14 @@ public class AttendanceDialogFragment extends DialogFragment {
 
     private static final String ARG_COURSE_CLASS_CYCLE = "arg_course_class_cycle";
     private static final String ARG_COURSE_CLASS_DAY = "arg_course_class_day";
+    private static final String ARG_COURSE_CLASS_PERIOD = "arg_course_class_period";
 
-    public static AttendanceDialogFragment newInstance(String cycle, String day) {
+    public static AttendanceDialogFragment newInstance(String cycle, String day, String period) {
 
         Bundle args = new Bundle();
         args.putString(ARG_COURSE_CLASS_CYCLE, cycle);
         args.putString(ARG_COURSE_CLASS_DAY, day);
+        args.putString(ARG_COURSE_CLASS_PERIOD, period);
         AttendanceDialogFragment fragment = new AttendanceDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -74,6 +80,7 @@ public class AttendanceDialogFragment extends DialogFragment {
         if (getArguments() != null) {
             mCycle = getArguments().getString(ARG_COURSE_CLASS_CYCLE);
             mDay = getArguments().getString(ARG_COURSE_CLASS_DAY);
+            mPeriod = getArguments().getString(ARG_COURSE_CLASS_PERIOD);
         }
 
     }
@@ -87,6 +94,7 @@ public class AttendanceDialogFragment extends DialogFragment {
         ButterKnife.bind(this, view);
 
         initializeDaySpinner();
+        initializePeriodSpinner();
         //Edit Mode
         if (getArguments() != null) {
             cycleEditText.setText(mCycle);
@@ -106,6 +114,21 @@ public class AttendanceDialogFragment extends DialogFragment {
                     break;
                 case "E":
                     daySpinner.setSelection(5);
+                    break;
+            }
+
+            switch (mPeriod) {
+                case "1":
+                    periodSpinner.setSelection(1);
+                    break;
+                case "2":
+                    periodSpinner.setSelection(2);
+                    break;
+                case "3":
+                    periodSpinner.setSelection(3);
+                    break;
+                case "4":
+                    periodSpinner.setSelection(4);
                     break;
             }
         }
@@ -135,8 +158,14 @@ public class AttendanceDialogFragment extends DialogFragment {
                             String cycle = cycleEditText.getText().toString();
                             String day = daySpinner.getSelectedItem().toString();
 
+                            if (periodSpinner.getSelectedItemPosition() == 0){
+                                periodSpinner.setSelection(1);
+                            }
+
+                            String period = periodSpinner.getSelectedItem().toString();
+
                             if (listener != null) {
-                                listener.onDataPassed(cycle, day);
+                                listener.onDataPassed(cycle, day, period);
                             }
                         }
 
@@ -159,6 +188,87 @@ public class AttendanceDialogFragment extends DialogFragment {
         });
 
         return alertDialog;
+    }
+
+    private void initializePeriodSpinner() {
+
+        String[] periods = new String[]{
+                "Class Period (Default 1)",
+                "1",
+                "2",
+                "3",
+                "4",
+        };
+
+        final List<String> periodList = new ArrayList<>(Arrays.asList(periods));
+
+        // Initializing an ArrayAdapter
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                getContext(), R.layout.spinner_item, periodList) {
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                view.setPadding(0, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+                return view;
+            }
+
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+
+                } else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        periodSpinner.setAdapter(spinnerArrayAdapter);
+
+        periodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItemText = (String) parent.getItemAtPosition(position);
+
+                if (position != 0) {
+
+                    TextView selectedText = view.findViewById(R.id.spinner_text_view);
+                    selectedText.setTextColor(getResources().getColor(R.color.spinnerSelectedTextColor));
+                }
+                // If user change the default selection
+                // First item is disable and it is used for hint
+                if (position > 0) {
+                    // Notify the selected item text
+//                    Toast.makeText
+//                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
+//                            .show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initializeDaySpinner() {

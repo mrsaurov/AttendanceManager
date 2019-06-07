@@ -15,15 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.activities.AddEditAttendanceActivity;
-import com.saurov.attendancemanager.activities.AddEditCourseActivity;
 import com.saurov.attendancemanager.activities.ClassDetailActivity;
-import com.saurov.attendancemanager.activities.CourseActivity;
-import com.saurov.attendancemanager.activities.CourseDetailActivity;
 import com.saurov.attendancemanager.adapters.ClassAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseClass;
 import com.saurov.attendancemanager.database.CourseStudent;
-import com.saurov.attendancemanager.dialogs.ClassBottomSheetDialogFragment;
 import com.saurov.attendancemanager.dialogs.ClassBottomSheetDialogFragment;
 
 import butterknife.BindView;
@@ -115,7 +111,7 @@ public class ClassFragment extends Fragment {
 
                             case ClassBottomSheetDialogFragment.ITEM_DELETE:
                                 courseClass.deleteCascade();
-                                course.setTotalClassTaken(course.getTotalClassTaken() - 1);
+//                                course.setTotalClassTaken(course.getTotalClassTaken() - 1);
                                 course.save();
 
                                 for (CourseStudent student : SugarRecord.listAll(CourseStudent.class)) {

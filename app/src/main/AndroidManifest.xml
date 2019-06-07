@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".activities.ClassDetailActivity"></activity>
+        <activity android:name=".activities.ClassDetailActivity" />
         <activity
             android:name=".activities.AddEditAttendanceActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -12,11 +12,8 @@ public class Course extends SugarRecord<Course> {
     private String series;
     private String department;
     private String section;
-    // TODO: 2019-05-30 acquire total class taken using raw query 
-    private int totalClassTaken;
 
     public Course() {
-        totalClassTaken = 0;
     }
 
     public Course(String number, String title, String series, String department, String section) {
@@ -25,22 +22,15 @@ public class Course extends SugarRecord<Course> {
         this.series = series;
         this.department = department;
         this.section = section;
-        this.totalClassTaken = 0;
     }
 
     public List<CourseStudent> getStudents() {
         return SugarRecord.find(CourseStudent.class, "course = ?", String.valueOf(this.getId()));
     }
 
-    // TODO: 2019-06-06 If no one is present then that class is not returned.. fix it
     public List<CourseClass> getAllClasses() {
+        return SugarRecord.find(CourseClass.class, "course = ?", String.valueOf(this.getId()));
 
-        return SugarRecord.findWithQuery(CourseClass.class,
-                "select distinct course_class.id, day, cycle, timestamp " +
-                        "from course_class,attendance,course_student " +
-                        "where attendance.course_class = course_class.id and " +
-                        "course_student.id = attendance.course_student and course_student.course = ?",
-                String.valueOf(this.getId()));
     }
 
     public String getNumber() {
@@ -84,36 +74,37 @@ public class Course extends SugarRecord<Course> {
     }
 
     public int getTotalClassTaken() {
+
+        List<CourseClass> courseClasses = this.getAllClasses();
+
+        int totalClassTaken = 0;
+
+        for (CourseClass courseclass : courseClasses) {
+
+            totalClassTaken += courseclass.getPeriod();
+        }
+
         return totalClassTaken;
     }
 
-    public void setTotalClassTaken(int totalClassTaken) {
-        this.totalClassTaken = totalClassTaken;
-    }
+//    public void setTotalClassTaken(int totalClassTaken) {
+//        this.totalClassTaken = totalClassTaken;
+//    }
 
     public long getTotalStudents() {
         return SugarRecord.count(CourseStudent.class, "course = ?", new String[]{String.valueOf(this.getId())});
     }
 
     public CourseClass getLastClassTaken() {
-        return SugarRecord.findWithQuery(CourseClass.class,
-                "select distinct course_class.id, day, cycle, timestamp " +
-                        "from course_class,attendance,course_student " +
-                        "where attendance.course_class = course_class.id and " +
-                        "course_student.id = attendance.course_student and course_student.course = ? " +
-                        "order by timestamp desc " +
-                        "limit 1",
-                String.valueOf(this.getId())).get(0);
+
+        return SugarRecord.find(CourseClass.class, "course = ?",
+                new String[]{String.valueOf(this.getId())}, null, "timestamp desc", "1").get(0);
     }
 
-    // TODO: 2019-05-30 Insure that course class delete reflects total class taken change
     public void deleteCascade() {
 
         //Delete all course class
-        SugarRecord.executeQuery("delete from course_class where " +
-                        "course_class.id in " +
-                        "(select distinct course_class from attendance,course_student where course_student.id  = attendance.course_student and course_student.course = ?)"
-                , String.valueOf(this.getId()));
+        SugarRecord.deleteAll(CourseClass.class, "course = ?", String.valueOf(this.getId()));
 
         //Delete all attendance data
         SugarRecord.executeQuery("delete from attendance where " +
@@ -132,8 +123,7 @@ public class Course extends SugarRecord<Course> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return totalClassTaken == course.totalClassTaken &&
-                Objects.equals(number, course.number) &&
+        return Objects.equals(number, course.number) &&
                 Objects.equals(title, course.title) &&
                 Objects.equals(series, course.series) &&
                 Objects.equals(department, course.department) &&
@@ -142,6 +132,6 @@ public class Course extends SugarRecord<Course> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, title, series, department, section, totalClassTaken);
+        return Objects.hash(number, title, series, department, section);
     }
 }

@@ -9,14 +9,32 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class CourseClass extends SugarRecord<CourseClass> {
+    private Course course;
     private String day;
     private String cycle;
+    private int period;
     private long timestamp;
 
-    // TODO: 2019-05-30 Add class period/weight for multiple period of classes
-
+    // TODO: 2019-06-08 Show period info to user 
+    
     public CourseClass() {
 
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public CourseClass(String day, String cycle, long timestamp) {
@@ -85,13 +103,15 @@ public class CourseClass extends SugarRecord<CourseClass> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CourseClass that = (CourseClass) o;
-        return timestamp == that.timestamp &&
+        return period == that.period &&
+                timestamp == that.timestamp &&
+                Objects.equals(course, that.course) &&
                 Objects.equals(day, that.day) &&
                 Objects.equals(cycle, that.cycle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(day, cycle, timestamp);
+        return Objects.hash(course, day, cycle, period, timestamp);
     }
 }

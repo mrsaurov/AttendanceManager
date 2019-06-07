@@ -47,7 +47,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Readmitted Students (Comma Seperated)">
+            android:hint="Readmitted Students (Comma Separated)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/enrollment_readmitted_rolls"
@@ -62,7 +62,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Excluding (Comma Seperated)">
+            android:hint="Excluding (Comma Separated)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/series_edit_text"

@@ -1,7 +1,7 @@
 package com.saurov.attendancemanager.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -17,19 +18,13 @@ import com.google.android.material.button.MaterialButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.activities.AddEditAttendanceActivity;
+import com.saurov.attendancemanager.activities.AddStudentActivity;
 import com.saurov.attendancemanager.database.Course;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CourseInfoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CourseInfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CourseInfoFragment extends Fragment {
 
     @BindView(R.id.class_name_image_view)
@@ -62,7 +57,6 @@ public class CourseInfoFragment extends Fragment {
     private static final String ARG_COURSE_ID = "arg_course_id";
 
     private long courseId;
-    private OnFragmentInteractionListener mListener;
 
     public CourseInfoFragment() {
         // Required empty public constructor
@@ -101,9 +95,37 @@ public class CourseInfoFragment extends Fragment {
         takeAttendanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), AddEditAttendanceActivity.class);
-                i.putExtra(AddEditAttendanceActivity.TAG_COURSE_ID, courseId);
-                startActivity(i);
+
+                if (course.getTotalStudents() != 0) {
+
+                    Intent i = new Intent(getContext(), AddEditAttendanceActivity.class);
+                    i.putExtra(AddEditAttendanceActivity.TAG_COURSE_ID, courseId);
+                    startActivity(i);
+
+                } else {
+                    new AlertDialog.Builder(getContext())
+                            .setCancelable(false)
+                            .setTitle("No student enrolled")
+                            .setMessage("You have to at least add one student to take attendance")
+                            .setPositiveButton("Enroll Student", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent i = new Intent(getContext(), AddStudentActivity.class);
+                                    i.putExtra(AddStudentActivity.TAG_COURSE_ID, courseId);
+
+                                    startActivity(i);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create().show();
+
+                }
             }
         });
 
@@ -121,7 +143,7 @@ public class CourseInfoFragment extends Fragment {
         totalClassTakenTextView.setText(String.valueOf(course.getTotalClassTaken()));
         if (course.getAllClasses().size() != 0) {
             lastClassTextView.setText(course.getLastClassTaken().getHumanReadableDate());
-        }else {
+        } else {
             lastClassTextView.setText("N/A");
         }
 
@@ -138,43 +160,4 @@ public class CourseInfoFragment extends Fragment {
         }
     }
 
-
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

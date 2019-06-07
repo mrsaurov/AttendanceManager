@@ -41,7 +41,7 @@ public class AddEditCourseActivity extends AppCompatActivity {
     @BindView(R.id.department_name_edit_text)
     TextInputEditText departmentName;
 
-    @BindView(R.id.departmant_name_layout)
+    @BindView(R.id.department_name_layout)
     TextInputLayout departmentNameLayout;
 
     @BindView(R.id.course_no_edit_text)
@@ -65,7 +65,7 @@ public class AddEditCourseActivity extends AppCompatActivity {
     @BindView(R.id.cancel_button)
     MaterialButton cancelButton;
 
-    Course course;
+    private Course course;
 
 
     @Override

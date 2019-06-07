@@ -28,4 +28,10 @@
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
+    <Spinner
+        android:id="@+id/period_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
 </LinearLayout>

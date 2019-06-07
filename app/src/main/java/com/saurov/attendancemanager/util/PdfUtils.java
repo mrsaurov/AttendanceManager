@@ -36,6 +36,8 @@ import java.util.List;
 
 public class PdfUtils {
 
+    // TODO: 2019-06-08 Make teacher name , designation, dept dynamic
+
     private static final String APP_EXTERNAL_DIRECTORY = "/AttendanceManager";
 
     public static void createAttendanceReport(Activity activity, Course course) {
@@ -81,9 +83,7 @@ public class PdfUtils {
         if (!dir.exists())
             dir.mkdirs();
 
-        File file = new File(dir, pdfName + ".pdf");
-
-        return file;
+        return new File(dir, pdfName + ".pdf");
     }
 
 

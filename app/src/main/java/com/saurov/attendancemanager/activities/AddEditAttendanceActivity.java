@@ -40,10 +40,10 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    AttendanceAdapter2 adapter;
-    ActionBar actionBar;
+    private AttendanceAdapter2 adapter;
+    private ActionBar actionBar;
 
-    CourseClass courseClass;
+    private CourseClass courseClass;
 
     public static final String EDIT_CLASS_ATTENDANCE_FLAG = "FLAG_EDIT_CLASS_ATTENDANCE";
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
@@ -53,6 +53,7 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
 
     private String mCycle;
     private String mDay;
+    private String mPeriod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +83,16 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
             dialogFragment.show(getSupportFragmentManager(), "dialog");
             dialogFragment.setOnAttendanceDataPassedListener(new AttendanceDialogFragment.onAttendanceDataPassedListener() {
                 @Override
-                public void onDataPassed(String cycle, String day) {
+                public void onDataPassed(String cycle, String day, String period) {
                     mCycle = cycle;
                     mDay = day;
+                    mPeriod = period;
                     actionBar.setTitle(cycle + day);
                 }
             });
 
             courseClass = new CourseClass();
+            courseClass.setCourse(course);
             adapter = new AttendanceAdapter2(this, courseStudents);
         } else {
             //Edit Request
@@ -99,6 +102,7 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
 
             mCycle = courseClass.getCycle();
             mDay = courseClass.getDay();
+            mPeriod = String.valueOf(courseClass.getPeriod());
 
             refreshActionBarTitle();
 
@@ -127,21 +131,14 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
     private void saveAttendance(String editFlag, Course course) {
         List<CourseStudent> selectedStudents = adapter.getSelectedStudents();
 
-//        String cycle = cycleEditText.getText().toString();
-
-//        String day = daySpinner.getSelectedItem().toString();
-
-//        courseClass.setCycle(cycle);
-//        courseClass.setDay(day);
-
-
         courseClass.setCycle(mCycle);
         courseClass.setDay(mDay);
+        courseClass.setPeriod(Integer.parseInt(mPeriod));
 
         if (editFlag == null) {
             //New Attendance
             courseClass.setTimestamp(System.currentTimeMillis());
-            course.setTotalClassTaken(course.getTotalClassTaken() + 1);
+//            course.setTotalClassTaken(course.getTotalClassTaken() + 1);
             course.save();
         } else {
             //Edit
@@ -208,14 +205,15 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
                 break;
             case R.id.edit:
                 AttendanceDialogFragment dialogFragment =
-                        AttendanceDialogFragment.newInstance(mCycle, mDay);
+                        AttendanceDialogFragment.newInstance(mCycle, mDay, mPeriod);
                 dialogFragment.setCancelable(false);
                 dialogFragment.show(getSupportFragmentManager(), "dialog_edit");
                 dialogFragment.setOnAttendanceDataPassedListener(new AttendanceDialogFragment.onAttendanceDataPassedListener() {
                     @Override
-                    public void onDataPassed(String cycle, String day) {
+                    public void onDataPassed(String cycle, String day, String period) {
                         mCycle = cycle;
                         mDay = day;
+                        mPeriod = period;
                         refreshActionBarTitle();
                     }
                 });

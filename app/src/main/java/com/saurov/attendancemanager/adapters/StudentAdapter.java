@@ -1,7 +1,6 @@
 package com.saurov.attendancemanager.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,16 +63,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         CourseStudent student = courseStudentsList.get(position);
 
         holder.studentRoll.setText(String.valueOf(student.getRoll()));
-
-        //Randomly generating for testing
-
-//        Random random = new Random(System.currentTimeMillis());
-
-//        student.setAttendancePercentage(random.nextInt(100));
-
-//        if (student.getRoll() == 1503065){
-        Log.d("Saurov", "student : " + student.getRoll() + " " + student.getAttendancePercentage());
-//        }
 
         double attendancePercentage = student.getAttendancePercentage();
 

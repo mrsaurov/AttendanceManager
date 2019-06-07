@@ -1,7 +1,6 @@
 package com.saurov.attendancemanager.database;
 
 import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
 import java.util.Objects;
 
