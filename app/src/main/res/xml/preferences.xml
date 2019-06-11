@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="pdf_export_category"
+        app:title="PDF Export">
+
+        <EditTextPreference
+            app:key="name"
+            app:title="Your Name"
+            app:dialogMessage="Provide your full name"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:entries="@array/designation_values"
+            app:entryValues="@array/designation_values"
+            app:key="designation"
+            app:title="Designation"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="department"
+            app:dialogMessage="Provide your full department name"
+            app:title="Your Department"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

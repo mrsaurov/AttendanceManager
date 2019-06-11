@@ -31,4 +31,5 @@
     <color name="progress_bad">#d50000</color>
 
     <color name="search_hint_color">#737373</color>
+    <color name="drawer_item_selected_color">#F5F5F5</color>
 </resources>

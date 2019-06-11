@@ -20,6 +20,7 @@ public class Utils {
                 ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 return false;
             }
+
         }
         else {
             return true;

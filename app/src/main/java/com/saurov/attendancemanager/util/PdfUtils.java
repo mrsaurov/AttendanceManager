@@ -3,10 +3,12 @@ package com.saurov.attendancemanager.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
 
 import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.kernel.color.Color;
@@ -36,11 +38,19 @@ import java.util.List;
 
 public class PdfUtils {
 
-    // TODO: 2019-06-08 Make teacher name , designation, dept dynamic
-
     private static final String APP_EXTERNAL_DIRECTORY = "/AttendanceManager";
 
+    private static String teacherName;
+    private static String teacherDesignation;
+    private static String teacherDepartment;
+
     public static void createAttendanceReport(Activity activity, Course course) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+
+        teacherName = preferences.getString("name", null);
+        teacherDepartment = preferences.getString("department", null);
+        teacherDesignation = preferences.getString("designation", null);
 
         String pdfName = course.getNumber() + "_"
                 + course.getDepartment() + course.getSeries() + "_" + course.getSection();
@@ -117,9 +127,8 @@ public class PdfUtils {
                 .setFontSize(13);
         header.add(ruet).setTextAlignment(TextAlignment.CENTER).add("\n");
 
-        String deptName = "Computer Science and Engineering";
 
-        Text department = new Text("Department of ".concat(deptName))
+        Text department = new Text("Department of ".concat(teacherDepartment))
                 .setFont(bold)
                 .setFontSize(13);
 
@@ -186,20 +195,18 @@ public class PdfUtils {
 
         Paragraph teacherInfo = new Paragraph().setTextAlignment(TextAlignment.RIGHT);
 
-        String steacherName = "Barshon Sen";
-        String steacherDesignation = "Assistant Professor";
-        String spost = "Department of CSE, RUET";
+        String spost = "Department of " + teacherDepartment + ", RUET";
 
-        Text teacherName = new Text(steacherName).setFontSize(13).setItalic().setFont(bold);
-        Text teacherDesignation = new Text(steacherDesignation).setFontSize(13).setFont(font);
-        Text teacherPost = new Text(spost).setFontSize(13).setFont(font);
+        Text teacherNameText = new Text(teacherName).setFontSize(13).setItalic().setFont(bold);
+        Text teacherDesignationText = new Text(teacherDesignation).setFontSize(13).setFont(font);
+        Text teacherPostText = new Text(spost).setFontSize(13).setFont(font);
         Text invisibleText = new Text(spost + "AAAAA").setFontSize(13).setFontColor(Color.WHITE).setFont(font);
 
         teacherInfo.add("\n").add("\n");
         teacherInfo.add(invisibleText.setBorderBottom(new SolidBorder(Color.BLACK, 1f))).add("\n");
-        teacherInfo.add(teacherName).add("\n");
-        teacherInfo.add(teacherDesignation).add("\n");
-        teacherInfo.add(teacherPost).add("\n");
+        teacherInfo.add(teacherNameText).add("\n");
+        teacherInfo.add(teacherDesignationText).add("\n");
+        teacherInfo.add(teacherPostText).add("\n");
 
         document.add(teacherInfo);
 

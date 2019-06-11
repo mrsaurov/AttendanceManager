@@ -3,4 +3,11 @@
     <string name="title_activity_course">My Courses</string>
     <string name="title_activity_add_course">Add Course</string>
 
+    <string-array name="designation_values">
+        <item>Lecturer</item>
+        <item>Assistant Professor</item>
+        <item>Associate Professor</item>
+        <item>Professor</item>
+    </string-array>
+
 </resources>

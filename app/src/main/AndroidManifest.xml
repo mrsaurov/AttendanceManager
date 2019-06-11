@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
+        <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.ClassDetailActivity" />
         <activity
             android:name=".activities.AddEditAttendanceActivity"
@@ -44,7 +45,7 @@
 
         <activity
             android:name=".activities.CourseActivity"
-            android:label="@string/title_activity_course" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
