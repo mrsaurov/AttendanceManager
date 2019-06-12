@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:fillViewport="true">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,25 +21,39 @@
             android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/class_name_image_view"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+            <com.vaibhavlakhera.circularprogressview.CircularProgressView
+                android:id="@+id/attendance_percentage_circular_progress"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@android:drawable/gallery_thumb" />
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="16dp"
+                app:animate="true"
+                app:animateDuration="600"
+                app:fillColor="@android:color/background_light"
+                app:layout_constraintBottom_toBottomOf="@+id/attendance_mark_circular_progress"
+                app:layout_constraintEnd_toStartOf="@+id/attendance_mark_circular_progress"
+                app:layout_constraintTop_toTopOf="@+id/attendance_mark_circular_progress"
+                app:progressColor="#d50000"
+                app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
+                app:progressRoundCap="true"
+                app:progressTextColor="@android:color/black"
+                app:progressTextEnabled="true"
+                app:progressTextSize="15sp"
+                app:progressTextType="percent"
+                app:progressWidth="7dp"
+                app:startAngle="270"
+                app:totalColor="@color/circular_progress_total_color"
+                app:totalValue="100"
+                app:totalWidth="5dp" />
 
             <TextView
-                android:id="@+id/class_date_text_view"
+                android:id="@+id/textView3"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="2dp"
-                android:text="TextView"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Attendance Percentage" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +67,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Student Present"
+                    android:text="Classes Attended"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
@@ -73,26 +88,26 @@
                 android:padding="5dp">
 
                 <com.google.android.material.chip.ChipGroup
-                    android:paddingTop="10dp"
                     android:id="@+id/student_present_chip_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/divider_drawable"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
                 android:padding="5dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Student Absent"
+                    android:text="Classes Absent"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
@@ -112,10 +127,10 @@
                 android:padding="5dp">
 
                 <com.google.android.material.chip.ChipGroup
-                    android:paddingTop="10dp"
                     android:id="@+id/student_absent_chip_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp" />
 
             </LinearLayout>
 

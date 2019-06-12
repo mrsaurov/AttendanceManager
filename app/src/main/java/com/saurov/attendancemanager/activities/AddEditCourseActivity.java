@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -65,8 +68,10 @@ public class AddEditCourseActivity extends AppCompatActivity {
     @BindView(R.id.cancel_button)
     MaterialButton cancelButton;
 
-    private Course course;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
+    private Course course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,14 @@ public class AddEditCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_course);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Course");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
+
 
         initializeSectionSpinner();
 
@@ -315,14 +328,13 @@ public class AddEditCourseActivity extends AppCompatActivity {
         return text != null && text.toString().trim().isEmpty();
     }
 
-//    public interface OnCourseSavedListener{
-//        void onCourseSaved();
-//    }
-//
-//    OnCourseSavedListener onCourseSavedListener;
-//
-//    public void setOnCourseSavedListener(OnCourseSavedListener listener){
-//        this.onCourseSavedListener = listener;
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
 

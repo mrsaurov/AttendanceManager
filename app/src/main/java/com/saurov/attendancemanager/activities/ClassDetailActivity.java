@@ -1,8 +1,13 @@
 package com.saurov.attendancemanager.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -47,6 +52,9 @@ public class ClassDetailActivity extends AppCompatActivity {
     @BindView(R.id.student_absent_chip_group)
     ChipGroup studentAbsentChipGroup;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     SparseBooleanArray attendedStudent;
 
     private long classId;
@@ -61,6 +69,15 @@ public class ClassDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class_detail);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Class Info");
+        Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material, getTheme());
+        upArrow.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+        actionBar.setHomeAsUpIndicator(upArrow);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
 
         classId = getIntent().getLongExtra(TAG_CLASS_ID, 0);
         courseId = getIntent().getLongExtra(TAG_COURSE_ID, 0);
@@ -126,6 +143,11 @@ public class ClassDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
+            case android.R.id.home:
+                finish();
+                break;
+
             case R.id.action_edit:
                 Intent intent = new Intent(this, AddEditAttendanceActivity.class);
                 intent.putExtra(AddEditAttendanceActivity.EDIT_CLASS_ATTENDANCE_FLAG, "EDIT");

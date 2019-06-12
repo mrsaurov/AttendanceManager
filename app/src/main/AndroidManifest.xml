@@ -13,9 +13,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
+        <activity android:name=".activities.StudentDetailActivity"></activity>
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.ClassDetailActivity" />
         <activity

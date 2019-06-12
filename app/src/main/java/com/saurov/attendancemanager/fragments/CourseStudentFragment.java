@@ -22,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.activities.AddStudentActivity;
+import com.saurov.attendancemanager.activities.StudentDetailActivity;
 import com.saurov.attendancemanager.adapters.StudentAdapter;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.database.CourseStudent;
@@ -106,6 +107,9 @@ public class CourseStudentFragment extends Fragment {
                                 refreshStudentRecyclerView();
                                 break;
                             case StudentBottomSheetDialogFragment.ITEM_OPEN:
+                                Intent intent = new Intent(getContext(),StudentDetailActivity.class);
+                                intent.putExtra(StudentDetailActivity.TAG_STUDENT_ID, student.getId());
+                                startActivity(intent);
                                 break;
                         }
                     }

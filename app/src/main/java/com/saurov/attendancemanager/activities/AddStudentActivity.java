@@ -1,7 +1,9 @@
 package com.saurov.attendancemanager.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -9,6 +11,7 @@ import butterknife.ButterKnife;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,6 +46,9 @@ public class AddStudentActivity extends AppCompatActivity {
     @BindView(R.id.cancel_button)
     MaterialButton cancelButton;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     public static final String TAG_COURSE_ID = "TAG_COURSE_ID";
     private SparseBooleanArray isStudentInDb = new SparseBooleanArray();
 
@@ -54,13 +60,21 @@ public class AddStudentActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Students");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
+
+
         long courseId = getIntent().getLongExtra(TAG_COURSE_ID, 0);
 
-        Course course = SugarRecord.findById(Course.class,courseId);
+        Course course = SugarRecord.findById(Course.class, courseId);
 
         List<CourseStudent> courseStudents = course.getStudents();
 
-        for (CourseStudent student:courseStudents){
+        for (CourseStudent student : courseStudents) {
             isStudentInDb.put(student.getRoll(), true);
         }
 
@@ -101,7 +115,7 @@ public class AddStudentActivity extends AppCompatActivity {
                     for (int i = firstRoll; i <= lastRoll; i++) {
 
                         // Excluded then don't add
-                        if (excludedSet.contains(i) || isStudentInDb.get(i)){
+                        if (excludedSet.contains(i) || isStudentInDb.get(i)) {
                             continue;
                         }
 
@@ -115,9 +129,9 @@ public class AddStudentActivity extends AppCompatActivity {
 
                     //Adding readmitted students
 
-                    for (int i : readmittedSet){
+                    for (int i : readmittedSet) {
 
-                        if (excludedSet.contains(i) || isStudentInDb.get(i)){
+                        if (excludedSet.contains(i) || isStudentInDb.get(i)) {
                             continue;
                         }
 
@@ -165,5 +179,15 @@ public class AddStudentActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
