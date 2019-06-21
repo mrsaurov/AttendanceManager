@@ -27,6 +27,8 @@ import butterknife.ButterKnife;
 
 public class StudentDetailActivity extends AppCompatActivity {
 
+    // TODO: 2019-06-13 Improve UI 
+
     public static final String TAG_STUDENT_ID = "TAG_STUDENT_ID";
     long studentId;
     CourseStudent student;
@@ -112,7 +114,6 @@ public class StudentDetailActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

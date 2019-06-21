@@ -66,7 +66,8 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
 
         holder.courseNameImageView.setImageDrawable(drawable);
         holder.classTimeTextView.setText(courseClass.getHumanReadableDate());
-        holder.classSummaryTextView.setText("Student Present: " + courseClass.getTotalStudentPresent());
+//        holder.classSummaryTextView.setText("Student Present: " + courseClass.getTotalStudentPresent());
+        holder.classSummaryTextView.setText("Period: ".concat(String.valueOf(courseClass.getPeriod())));
 
         holder.classMenuImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +122,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
         @BindView(R.id.class_time)
         TextView classTimeTextView;
 
-        @BindView(R.id.class_date_text_view)
+        @BindView(R.id.class_period_text_view)
         TextView classSummaryTextView;
 
 

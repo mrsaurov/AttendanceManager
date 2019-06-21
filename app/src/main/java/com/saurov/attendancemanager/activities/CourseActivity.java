@@ -3,10 +3,14 @@ package com.saurov.attendancemanager.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -18,6 +22,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.OpenFileActivityOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -31,9 +37,14 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.orm.SugarApp;
+import com.orm.SugarConfig;
+import com.orm.SugarCursorFactory;
+import com.orm.SugarDb;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseAdapter;
+import com.saurov.attendancemanager.backup.RemoteBackup;
 import com.saurov.attendancemanager.database.Course;
 import com.saurov.attendancemanager.dialogs.CourseBottomSheetDialogFragment;
 import com.saurov.attendancemanager.util.PdfUtils;
@@ -63,6 +74,13 @@ public class CourseActivity extends AppCompatActivity implements ActivityCompat.
     public static final String EDIT_COURSE_FLAG = "EDIT_COURSE_FLAG";
     public static final String COURSE_ID_TAG = "COURSE_ID_TAG";
 
+    RemoteBackup remoteBackup;
+    private boolean isBackup = true;
+
+    private static final int REQUEST_CODE_SIGN_IN = 0;
+    public static final int REQUEST_CODE_OPENING = 1;
+    public static final int REQUEST_CODE_CREATION = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +97,10 @@ public class CourseActivity extends AppCompatActivity implements ActivityCompat.
         actionBar.setTitle("My Courses");
 
         showSideDrawer();
+
+        remoteBackup = new RemoteBackup(this);
+
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,6 +268,8 @@ public class CourseActivity extends AppCompatActivity implements ActivityCompat.
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Courses").withIcon(FontAwesome.Icon.faw_book).withIdentifier(1).withSelectedTextColor(Color.BLACK).withSelectedIconColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color)),
                         new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("Backup to Drive").withIdentifier(5),
+                        new PrimaryDrawerItem().withName("Restore from Drive").withIdentifier(6),
                         new PrimaryDrawerItem().withName("Settings").withIcon(GoogleMaterial.Icon.gmd_settings).withSelectedIconColor(Color.BLACK).withIdentifier(2).withSelectedTextColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color)),
                         new PrimaryDrawerItem().withName("About").withIcon(GoogleMaterial.Icon.gmd_error).withSelectedIconColor(Color.BLACK).withSelectedTextColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color))
                 )
@@ -267,6 +291,13 @@ public class CourseActivity extends AppCompatActivity implements ActivityCompat.
 //                    intent = new Intent(CourseActivity.this, CourseActivity.class);
                 } else if (drawerItem.getIdentifier() == 2) {
                     intent = new Intent(CourseActivity.this, SettingsActivity.class);
+                }else if (drawerItem.getIdentifier() == 5){
+                    //Backup to drive
+                    isBackup = true;
+                    remoteBackup.connectToDrive(isBackup);
+                }else if (drawerItem.getIdentifier() == 6){
+                    isBackup = false;
+                    remoteBackup.connectToDrive(isBackup);
                 }
 
                 if (intent != null) {
@@ -280,6 +311,38 @@ public class CourseActivity extends AppCompatActivity implements ActivityCompat.
     private void refreshCourseRecyclerView() {
         adapter.refreshData(SugarRecord.listAll(Course.class));
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        switch (requestCode) {
+
+            case REQUEST_CODE_SIGN_IN:
+                Log.i("Saurov", "Sign in request code");
+                // Called after user is signed in.
+                if (resultCode == RESULT_OK) {
+                    remoteBackup.connectToDrive(isBackup);
+                }
+                break;
+
+            case REQUEST_CODE_CREATION:
+                // Called after a file is saved to Drive.
+                if (resultCode == RESULT_OK) {
+                    Log.i("Saurov", "Backup successfully saved.");
+                    Toast.makeText(this, "Backup successufly loaded!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case REQUEST_CODE_OPENING:
+                if (resultCode == RESULT_OK) {
+                    DriveId driveId = data.getParcelableExtra(
+                            OpenFileActivityOptions.EXTRA_RESPONSE_DRIVE_ID);
+                    remoteBackup.mOpenItemTaskSource.setResult(driveId);
+                } else {
+                    remoteBackup.mOpenItemTaskSource.setException(new RuntimeException("Unable to open file"));
+                }
+
+        }
     }
 
     @Override

@@ -28,9 +28,13 @@ public class Course extends SugarRecord<Course> {
         return SugarRecord.find(CourseStudent.class, "course = ?", String.valueOf(this.getId()));
     }
 
-    public List<CourseClass> getAllClasses() {
-        return SugarRecord.find(CourseClass.class, "course = ?", String.valueOf(this.getId()));
+//    public List<CourseClass> getAllClasses() {
+//        return SugarRecord.find(CourseClass.class, "course = ?", String.valueOf(this.getId()));
+//
+//    }
 
+    public List<CourseClass> getAllClasses(){
+        return SugarRecord.find(CourseClass.class, "course = ?", new String[]{String.valueOf(this.getId())}, null,"timestamp desc",null);
     }
 
     public String getNumber() {

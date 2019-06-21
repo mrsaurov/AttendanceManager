@@ -90,7 +90,9 @@ public class CourseStudentFragment extends Fragment {
         adapter.setOnItemClickListener(new StudentAdapter.OnItemClickListener() {
             @Override
             public void onClick(CourseStudent student, int position) {
-
+                Intent intent = new Intent(getContext(),StudentDetailActivity.class);
+                intent.putExtra(StudentDetailActivity.TAG_STUDENT_ID, student.getId());
+                startActivity(intent);
             }
 
             @Override

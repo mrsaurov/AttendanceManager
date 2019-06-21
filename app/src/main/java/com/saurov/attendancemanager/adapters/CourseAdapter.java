@@ -126,7 +126,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         @BindView(R.id.class_time)
         TextView courseTitle;
 
-        @BindView(R.id.class_date_text_view)
+        @BindView(R.id.course_batch_text_view)
         TextView courseClass;
 
         @BindView(R.id.class_menu_image_view)

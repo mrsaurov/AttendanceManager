@@ -69,6 +69,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
         initializeTabs(courseId);
 
+
     }
 
     private void initializeTabs(long courseId) {

@@ -37,7 +37,7 @@ public class ClassDetailActivity extends AppCompatActivity {
     @BindView(R.id.class_name_image_view)
     ImageView classNameImageView;
 
-    @BindView(R.id.class_date_text_view)
+    @BindView(R.id.class_period_text_view)
     TextView classDateTextView;
 
     @BindView(R.id.student_present_text_view)

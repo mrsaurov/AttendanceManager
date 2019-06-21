@@ -43,7 +43,7 @@
             tools:text="Computer Architecture" />
 
         <TextView
-            android:id="@+id/class_date_text_view"
+            android:id="@+id/class_period_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

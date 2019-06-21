@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".activities.StudentDetailActivity"></activity>
+        <activity android:name=".activities.StudentDetailActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.ClassDetailActivity" />
         <activity

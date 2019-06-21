@@ -30,7 +30,7 @@ public class CourseInfoFragment extends Fragment {
     @BindView(R.id.class_name_image_view)
     ImageView courseSeriesImageView;
 
-    @BindView(R.id.class_date_text_view)
+    @BindView(R.id.course_batch_text_view)
     TextView courseClass;
 
     @BindView(R.id.student_present_text_view)
