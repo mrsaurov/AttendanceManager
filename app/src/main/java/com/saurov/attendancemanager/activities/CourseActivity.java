@@ -3,8 +3,6 @@ package com.saurov.attendancemanager.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,10 +35,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.orm.SugarApp;
-import com.orm.SugarConfig;
-import com.orm.SugarCursorFactory;
-import com.orm.SugarDb;
 import com.orm.SugarRecord;
 import com.saurov.attendancemanager.R;
 import com.saurov.attendancemanager.adapters.CourseAdapter;
@@ -268,10 +262,11 @@ public class CourseActivity extends AppCompatActivity implements ActivityCompat.
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Courses").withIcon(FontAwesome.Icon.faw_book).withIdentifier(1).withSelectedTextColor(Color.BLACK).withSelectedIconColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color)),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("Backup to Drive").withIdentifier(5),
-                        new PrimaryDrawerItem().withName("Restore from Drive").withIdentifier(6),
-                        new PrimaryDrawerItem().withName("Settings").withIcon(GoogleMaterial.Icon.gmd_settings).withSelectedIconColor(Color.BLACK).withIdentifier(2).withSelectedTextColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color)),
-                        new PrimaryDrawerItem().withName("About").withIcon(GoogleMaterial.Icon.gmd_error).withSelectedIconColor(Color.BLACK).withSelectedTextColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color))
+                        new PrimaryDrawerItem().withName("Backup to Google Drive").withIcon(FontAwesome.Icon.faw_cloud_upload_alt).withIdentifier(5),
+                        new PrimaryDrawerItem().withName("Restore from Google Drive").withIcon(FontAwesome.Icon.faw_cloud_download_alt).withIdentifier(6),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("Settings").withIcon(GoogleMaterial.Icon.gmd_settings).withSelectedIconColor(Color.BLACK).withIdentifier(2).withSelectedTextColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color))
+//                        new PrimaryDrawerItem().withName("About").withIcon(GoogleMaterial.Icon.gmd_error).withSelectedIconColor(Color.BLACK).withSelectedTextColor(Color.BLACK).withSelectedColor(getResources().getColor(R.color.drawer_item_selected_color))
                 )
                 .withOnDrawerItemClickListener(drawerItemClickListener)
                 .build();

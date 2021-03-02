@@ -103,7 +103,7 @@ public class CourseStudent extends SugarRecord<CourseStudent> {
 
         return SugarRecord.findWithQuery(CourseClass.class,
                 "select * from course_class where id not in (select course_class.id from course_class,attendance " +
-                        "where course_class.id = attendance.course_class and course_student = ?)", String.valueOf(this.getId()));
+                        "where course_class.id = attendance.course_class and course_student = ?) and course = ?", String.valueOf(this.getId()), String.valueOf(course.getId()));
 
 
 

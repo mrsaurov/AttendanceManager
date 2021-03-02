@@ -21,39 +21,101 @@
             android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
-            <com.vaibhavlakhera.circularprogressview.CircularProgressView
-                android:id="@+id/attendance_percentage_circular_progress"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="16dp"
-                app:animate="true"
-                app:animateDuration="600"
-                app:fillColor="@android:color/background_light"
-                app:layout_constraintBottom_toBottomOf="@+id/attendance_mark_circular_progress"
-                app:layout_constraintEnd_toStartOf="@+id/attendance_mark_circular_progress"
-                app:layout_constraintTop_toTopOf="@+id/attendance_mark_circular_progress"
-                app:progressColor="#d50000"
-                app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
-                app:progressRoundCap="true"
-                app:progressTextColor="@android:color/black"
-                app:progressTextEnabled="true"
-                app:progressTextSize="15sp"
-                app:progressTextType="percent"
-                app:progressWidth="7dp"
-                app:startAngle="270"
-                app:totalColor="@color/circular_progress_total_color"
-                app:totalValue="100"
-                app:totalWidth="5dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Attendance Percentage" />
+                <com.vaibhavlakhera.circularprogressview.CircularProgressView
+                    android:id="@+id/attendance_mark_circular_progress"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:animate="true"
+                    app:animateDuration="600"
+                    app:fillColor="@android:color/background_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:progressColor="#d50000"
+                    app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
+                    app:progressRoundCap="true"
+                    app:progressTextColor="@android:color/black"
+                    app:progressTextEnabled="true"
+                    app:progressTextSize="15sp"
+                    app:progressTextType="progress"
+                    app:progressWidth="7dp"
+                    app:startAngle="270"
+                    app:totalColor="@color/circular_progress_total_color"
+                    app:totalValue="8"
+                    app:totalWidth="5dp" />
+
+                <com.vaibhavlakhera.circularprogressview.CircularProgressView
+                    android:id="@+id/attendance_percentage_circular_progress"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:animate="true"
+                    app:animateDuration="600"
+                    app:fillColor="@android:color/background_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:progressColor="#d50000"
+                    app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
+                    app:progressRoundCap="true"
+                    app:progressTextColor="@android:color/black"
+                    app:progressTextEnabled="true"
+                    app:progressTextSize="15sp"
+                    app:progressTextType="percent"
+                    app:progressWidth="7dp"
+                    app:startAngle="270"
+                    app:totalColor="@color/circular_progress_total_color"
+                    app:totalValue="100"
+                    app:totalWidth="5dp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Attendance"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="@+id/attendance_percentage_circular_progress"
+                    app:layout_constraintStart_toStartOf="@+id/attendance_percentage_circular_progress" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Mark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/attendance_mark_circular_progress"
+                    app:layout_constraintStart_toStartOf="@+id/attendance_mark_circular_progress"
+                    app:layout_constraintTop_toBottomOf="@+id/attendance_mark_circular_progress"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".5" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -66,6 +66,7 @@ public class ClassFragment extends Fragment {
         if (getArguments() != null) {
             courseId = getArguments().getLong(ARG_COURSE_ID);
             course = SugarRecord.findById(Course.class, courseId);
+
         }
     }
 

@@ -134,25 +134,25 @@ public class AttendanceAdapter2 extends RecyclerView.Adapter<AttendanceAdapter2.
                         attendanceCheckBox.setChecked(true, true);
                         selectedStudents.add(studentList.get(adapterPosition));
                         isSelectedAll = false;
-
-                        StringBuilder sb = new StringBuilder();
-                        for (CourseStudent cs : selectedStudents) {
-                            sb.append(cs.getRoll()).append(", ");
-                        }
-
-                        Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+//
+//                        StringBuilder sb = new StringBuilder();
+//                        for (CourseStudent cs : selectedStudents) {
+//                            sb.append(cs.getRoll()).append(", ");
+//                        }
+//
+//                        Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
 
                         array.put(adapterPosition, true);
                     } else {
                         attendanceCheckBox.setChecked(false, true);
                         selectedStudents.remove(studentList.get(adapterPosition));
                         isSelectedAll = false;
-                        StringBuilder sb = new StringBuilder();
-                        for (CourseStudent cs : selectedStudents) {
-                            sb.append(cs.getRoll()).append(", ");
-                        }
-
-                        Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+//                        StringBuilder sb = new StringBuilder();
+//                        for (CourseStudent cs : selectedStudents) {
+//                            sb.append(cs.getRoll()).append(", ");
+//                        }
+//
+//                        Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
 
                         array.put(adapterPosition, false);
                     }

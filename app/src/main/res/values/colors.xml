@@ -24,7 +24,6 @@
     <color name="tab_text_color">@color/black</color>
     <color name="windowBackgroundColor">@color/white</color>
 
-
     <color name="progress_excellent">#388E3C</color>
     <color name="progress_good">#66BB6A</color>
     <color name="progress_average">#FF9800</color>

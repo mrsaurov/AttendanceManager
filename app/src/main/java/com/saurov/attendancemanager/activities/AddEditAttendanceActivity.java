@@ -23,6 +23,7 @@ import com.saurov.attendancemanager.database.CourseClass;
 import com.saurov.attendancemanager.database.CourseStudent;
 import com.saurov.attendancemanager.dialogs.AttendanceDialogFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -148,18 +149,23 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
 
         courseClass.save();
 
+        List<Attendance> attendanceList = new ArrayList<>();
         for (CourseStudent student : selectedStudents) {
             Attendance attendance = new Attendance();
 
             attendance.setCourseStudent(student);
             attendance.setCourseClass(courseClass);
-            attendance.save();
+//            attendance.save();
+            attendanceList.add(attendance);
 
             // Update course info and student attendance percentage
         }
 
+        Attendance.saveInTx(attendanceList);
+
         //Updating student attendance data
 
+        List<CourseStudent> updatedStudents = new ArrayList<>();
         for (CourseStudent student : SugarRecord.listAll(CourseStudent.class)) {
             long totalClassAttended = student.getTotalClassAttended();
             int totalClass = student.getCourse().getTotalClassTaken();
@@ -168,8 +174,12 @@ public class AddEditAttendanceActivity extends AppCompatActivity {
 
             student.setAttendancePercentage(attendancePercentage);
             student.setAttendanceMark(attendanceMark);
-            student.save();
+//            student.save();
+            updatedStudents.add(student);
         }
+
+        CourseStudent.saveInTx(updatedStudents);
+
 
         finish();
     }

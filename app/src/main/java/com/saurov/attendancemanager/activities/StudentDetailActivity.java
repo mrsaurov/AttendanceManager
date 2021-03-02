@@ -39,6 +39,9 @@ public class StudentDetailActivity extends AppCompatActivity {
     @BindView(R.id.attendance_percentage_circular_progress)
     CircularProgressView attendancePercentageCircularProgress;
 
+    @BindView(R.id.attendance_mark_circular_progress)
+    CircularProgressView attendanceMarkCircularProgress;
+
     @BindView(R.id.student_absent_chip_group)
     ChipGroup studentAbsentChipGroup;
 
@@ -77,6 +80,10 @@ public class StudentDetailActivity extends AppCompatActivity {
         attendancePercentageCircularProgress
                 .setProgressColor(getAttendancePercentageProgressColor(attendancePercentage));
 
+        attendanceMarkCircularProgress.setProgress(student.getAttendanceMark(), false);
+        attendanceMarkCircularProgress
+                .setProgressColor(getAttendanceMarkProgressColor(student.getAttendanceMark()));
+
         List<CourseClass> classesAttended = student.getClassesAttended();
         List<CourseClass> classesAbsent = student.getClassesAbsent();
 
@@ -108,6 +115,20 @@ public class StudentDetailActivity extends AppCompatActivity {
         } else if (attendancePercentage >= 70) {
             return ContextCompat.getColor(this, R.color.progress_good);
         } else if (attendancePercentage >= 50) {
+            return ContextCompat.getColor(this, R.color.progress_average);
+        } else {
+            return ContextCompat.getColor(this, R.color.progress_bad);
+        }
+
+    }
+
+    private int getAttendanceMarkProgressColor(int attendanceMark) {
+
+        if (attendanceMark == 8) {
+            return ContextCompat.getColor(this, R.color.progress_excellent);
+        } else if (attendanceMark >= 6) {
+            return ContextCompat.getColor(this, R.color.progress_good);
+        } else if (attendanceMark >= 4) {
             return ContextCompat.getColor(this, R.color.progress_average);
         } else {
             return ContextCompat.getColor(this, R.color.progress_bad);
