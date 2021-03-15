@@ -1,0 +1,35 @@
+com/orm/dsl/Collection.java
+ com.orm.dsl.Collection
+ com.orm.dsl.Collection$Entry
+com/orm/QueryBuilder.java
+ com.orm.QueryBuilder
+com/orm/query/Condition.java
+ com.orm.query.Condition
+ com.orm.query.Condition$Check
+ com.orm.query.Condition$Type
+com/orm/SugarTransactionHelper.java
+ com.orm.SugarTransactionHelper
+ com.orm.SugarTransactionHelper$Callback
+com/orm/SugarCursorFactory.java
+ com.orm.SugarCursorFactory
+com/orm/SugarConfig.java
+ com.orm.SugarConfig
+com/orm/dsl/Ignore.java
+ com.orm.dsl.Ignore
+com/orm/dsl/BuildConfig.java
+ com.orm.dsl.BuildConfig
+com/orm/NumberComparator.java
+ com.orm.NumberComparator
+com/orm/SugarApp.java
+ com.orm.SugarApp
+com/orm/query/Select.java
+ com.orm.query.Select
+com/orm/StringUtil.java
+ com.orm.StringUtil
+com/orm/Database.java
+ com.orm.Database
+com/orm/SugarRecord.java
+ com.orm.SugarRecord
+ com.orm.SugarRecord$CursorIterator
+com/orm/SugarDb.java
+ com.orm.SugarDb
